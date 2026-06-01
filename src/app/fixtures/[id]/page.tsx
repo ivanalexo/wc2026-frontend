@@ -18,6 +18,8 @@ import { Match } from "@/lib/types";
 import ProbabilityBar from "@/components/shared/ProbabilityBar";
 import MatchScorePredictor from "@/components/fixtures/Matchscorepredictor";
 import LinkButton from "@/components/shared/LinkButton";
+import Image from "next/image";
+import { getFlagUrl } from "@/lib/flagCodes";
 
 // =============================================================================
 // Data fetching
@@ -91,7 +93,6 @@ export default async function FixtureDetailPage({
     <Box sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="md">
 
-        {/* Back link */}
         <Box
           component={LinkButton}
           href="/fixtures"
@@ -111,7 +112,6 @@ export default async function FixtureDetailPage({
           Volver a partidos
         </Box>
 
-        {/* ── HEADER DEL PARTIDO ──────────────────────────────────────── */}
         <Card
           sx={{
             background: "linear-gradient(135deg, #141414 0%, #0F0F0F 100%)",
@@ -122,7 +122,6 @@ export default async function FixtureDetailPage({
         >
           <CardContent sx={{ p: { xs: 3, md: 4 } }}>
 
-            {/* Badges */}
             <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
               {match.group && (
                 <Chip
@@ -140,9 +139,9 @@ export default async function FixtureDetailPage({
               )}
             </Box>
 
-            {/* Equipos y marcador */}
             <Grid container spacing={2} sx={{ mb: 3, alignItems: "center" }}>
               <Grid size={{ xs: 5 }} sx={{ textAlign: "center" }}>
+                <Image src={getFlagUrl(match.home_team, 80) as string} alt={match.home_team} width={50} height={25} />
                 <Typography
                   variant="h4"
                   sx={{
@@ -169,6 +168,7 @@ export default async function FixtureDetailPage({
               </Grid>
 
               <Grid size={{ xs: 5 }} sx={{ textAlign: "center" }}>
+                <Image src={getFlagUrl(match.away_team, 80) as string} alt={match.away_team} width={50} height={25} />
                 <Typography
                   variant="h4"
                   sx={{

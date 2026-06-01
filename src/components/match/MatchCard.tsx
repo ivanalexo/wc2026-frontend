@@ -8,6 +8,8 @@ import { Match } from "@/lib/types";
 import { FIFA } from "@/theme/theme";
 import ProbabilityBar from "@/components/shared/ProbabilityBar";
 import LinkButton from "@/components/shared/LinkButton";
+import Image from "next/image";
+import { getFlagUrl } from "@/lib/flagCodes";
 
 interface MatchCardProps {
   match: Match;
@@ -98,12 +100,25 @@ export default function MatchCard({ match }: MatchCardProps) {
           }}
         >
           {/* Home */}
-          <Typography
-            variant="body2"
-            sx={{ textAlign: "right", lineHeight: 1.2, fontWeight: 700 }}
-          >
-            {match.home_team}
-          </Typography>
+          <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 1
+          }}>
+            <Image
+              src={getFlagUrl(match.home_team, 40) as string}
+              alt={match.home_team}
+              width={20}
+              height={15}
+            />
+            <Typography
+              variant="body2"
+              sx={{ textAlign: "right", lineHeight: 1.2, fontWeight: 700 }}
+            >
+              {match.home_team}
+            </Typography>
+          </Box>
 
           {/* Marcador o VS */}
           <Box sx={{ textAlign: "center", px: 1 }}>
@@ -129,12 +144,27 @@ export default function MatchCard({ match }: MatchCardProps) {
           </Box>
 
           {/* Away */}
-          <Typography
-            variant="body2"
-            sx={{ textAlign: "left", lineHeight: 1.2, fontWeight: 700 }}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1,
+            }}
           >
-            {match.away_team}
-          </Typography>
+            <Image
+              src={getFlagUrl(match.away_team, 40) as string}
+              alt={match.away_team}
+              width={20}
+              height={15}
+            />
+            <Typography
+              variant="body2"
+              sx={{ textAlign: "left", lineHeight: 1.2, fontWeight: 700 }}
+            >
+              {match.away_team}
+            </Typography>
+          </Box>
         </Box>
 
         {/* Ciudad */}
@@ -142,7 +172,12 @@ export default function MatchCard({ match }: MatchCardProps) {
           <Typography
             variant="caption"
             color="text.secondary"
-            sx={{ display: "block", textAlign: "center", mb: 1.5, opacity: 0.6 }}
+            sx={{
+              display: "block",
+              textAlign: "center",
+              mb: 1.5,
+              opacity: 0.6,
+            }}
           >
             📍 {match.city}
           </Typography>

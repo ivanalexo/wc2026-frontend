@@ -1,8 +1,6 @@
-import NextLink from "next/link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -15,10 +13,6 @@ import { FIFA } from "@/theme/theme";
 import { Match, TeamSimulation } from "@/lib/types";
 import MatchCard from "@/components/match/MatchCard";
 import LinkButton from "@/components/shared/LinkButton"
-
-// =============================================================================
-// Data fetching
-// =============================================================================
 
 async function getTopFavorites(): Promise<TeamSimulation[]> {
   try {
@@ -47,15 +41,10 @@ async function getFeaturedFixtures(): Promise<Match[]> {
   }
 }
 
-// Colores FIFA asignados cíclicamente a las tarjetas de favoritos
 const ACCENT_COLORS = [
   FIFA.red, FIFA.royalBlue, FIFA.green, FIFA.orange,
   FIFA.hotPink, FIFA.skyBlue, FIFA.lime, FIFA.turquoise,
 ];
-
-// =============================================================================
-// Home Page
-// =============================================================================
 
 export default async function Home() {
   const [favorites, fixtures] = await Promise.all([
@@ -65,8 +54,6 @@ export default async function Home() {
 
   return (
     <Box>
-
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <Box
         sx={{
           position: "relative",
@@ -76,12 +63,11 @@ export default async function Home() {
           overflow: "hidden",
           background: `
             radial-gradient(ellipse 80% 60% at 50% 0%, ${FIFA.navy}55 0%, transparent 70%),
-            radial-gradient(ellipse 40% 40% at 80% 100%, ${FIFA.burgundy}33 0%, transparent 60%),
+            radial-gradient(ellipse 40% 60% at 80% 100%, ${FIFA.burgundy}44 0%, transparent 60%),
             #080808
           `,
         }}
       >
-        {/* Patrón diagonal decorativo */}
         <Box
           aria-hidden
           sx={{
@@ -107,7 +93,7 @@ export default async function Home() {
               variant="h1"
               sx={{ fontSize: { xs: "2.8rem", sm: "3.8rem", md: "5rem" }, fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", mb: 1, color: FIFA.white }}
             >
-              WORLD CUP
+              PREDICCIÓN MUNDIAL
             </Typography>
 
             <Typography
@@ -118,12 +104,11 @@ export default async function Home() {
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
               }}
             >
-              2026 PREDICTOR
+              FIFA 2026
             </Typography>
 
             <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400, mb: 4, maxWidth: 480, lineHeight: 1.6 }}>
-              Predicciones con Machine Learning para los 72 partidos.
-              XGBoost · Monte Carlo · SHAP
+              Predicciones con Machine Learning.
             </Typography>
 
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
@@ -143,35 +128,19 @@ export default async function Home() {
                 Ver partidos
               </LinkButton>
             </Box>
-
-            {/* Stats row */}
-            <Box sx={{ display: "flex", gap: 4, mt: 5, pt: 4, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-              {[
-                { value: "48", label: "Selecciones" },
-                { value: "72",  label: "Partidos"   },
-                { value: "10k", label: "Simulaciones"},
-                { value: "19",  label: "Features ML" },
-              ].map(({ value, label }) => (
-                <Box key={label}>
-                  <Typography variant="h5" sx={{ color: FIFA.lime, lineHeight: 1, fontWeight: 900 }}>{value}</Typography>
-                  <Typography variant="caption" color="text.secondary">{label}</Typography>
-                </Box>
-              ))}
-            </Box>
           </Box>
         </Container>
       </Box>
 
-      {/* ── CANDIDATOS AL TÍTULO ─────────────────────────────────────────── */}
       {favorites.length > 0 && (
         <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: "#0A0A0A" }}>
           <Container maxWidth="lg">
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 4 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 10 }}>
               <EmojiEventsIcon sx={{ color: FIFA.yellow, fontSize: 28 }} />
               <Typography variant="h4" sx={{ fontWeight: 800 }}>Candidatos al título</Typography>
               <Typography variant="caption" sx={{ ml: "auto", color: "text.secondary", letterSpacing: "0.06em", textTransform: "uppercase", fontSize: "0.7rem" }}>
-                Probabilidad Monte Carlo
+                Probabilidad basada en Monte Carlo
               </Typography>
             </Box>
 
@@ -236,14 +205,13 @@ export default async function Home() {
 
             <Box sx={{ textAlign: "center", mt: 3 }}>
               <LinkButton href="/simulate" variant="text" sx={{ color: "text.secondary", fontSize: "0.8rem" }}>
-                Ver simulación completa →
+                Ver simulación completa
               </LinkButton>
             </Box>
           </Container>
         </Box>
       )}
 
-      {/* ── PARTIDOS DESTACADOS ──────────────────────────────────────────── */}
       {fixtures.length > 0 && (
         <Box sx={{ py: { xs: 6, md: 8 } }}>
           <Container maxWidth="lg">
@@ -252,7 +220,7 @@ export default async function Home() {
               <SportsSoccerIcon sx={{ color: FIFA.red, fontSize: 28 }} />
               <Typography variant="h4" sx={{ fontWeight: 800 }}>Partidos del grupo</Typography>
               <LinkButton href="/fixtures" variant="text" size="small" sx={{ ml: "auto", color: "text.secondary", fontSize: "0.8rem" }}>
-                Ver todos →
+                Ver todos
               </LinkButton>
             </Box>
 
@@ -267,7 +235,6 @@ export default async function Home() {
         </Box>
       )}
 
-      {/* ── CTA PREDICTOR ────────────────────────────────────────────────── */}
       <Box
         sx={{
           py: { xs: 6, md: 8 },
@@ -282,7 +249,7 @@ export default async function Home() {
             ¿Quién gana el próximo partido?
           </Typography>
           <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400, mb: 4, maxWidth: 480, mx: "auto" }}>
-            Elige dos selecciones y el modelo XGBoost predice el resultado
+            Elige dos selecciones y el modelo predice el resultado
             con probabilidades y explicación en lenguaje natural.
           </Typography>
           <LinkButton

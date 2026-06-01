@@ -17,8 +17,9 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { FIFA } from "@/theme/theme";
+import Image from "next/image";
+import fifaLogo from "../../../public/images/fifa-logo.png"
 
 // =============================================================================
 // Definición de rutas
@@ -48,7 +49,7 @@ export default function Navbar() {
         elevation={0}
         sx={{
           backdropFilter: "blur(12px)",
-          backgroundColor: "rgba(8,8,8,0.92)",
+          backgroundColor: "rgba(43, 37, 37, 0.92)",
           borderBottom: `1px solid rgba(255,255,255,0.07)`,
         }}
       >
@@ -56,18 +57,12 @@ export default function Navbar() {
 
           {/* Logo */}
           <NextLink href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-            <SportsSoccerIcon sx={{ color: FIFA.red, fontSize: 28 }} />
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 900,
-                letterSpacing: "0.04em",
-                color: FIFA.white,
-                "& span": { color: FIFA.red },
-              }}
-            >
-              WC<span>26</span>
-            </Typography>
+            <Image
+              src={fifaLogo}
+              alt="FIFA 2026"
+              width={65}
+              height={65}
+            />
           </NextLink>
 
           {/* Spacer */}
@@ -156,10 +151,12 @@ export default function Navbar() {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <SportsSoccerIcon sx={{ color: FIFA.red, fontSize: 22 }} />
-            <Typography variant="h6" sx={{ fontWeight: 900 }} color={FIFA.white} component={'h6'}>
-              WC<span style={{ color: FIFA.red }}>26</span>
-            </Typography>
+            <Image
+              src={fifaLogo}
+              alt="FIFA 2026"
+              width={65}
+              height={65}
+            />
           </Box>
           <IconButton
             onClick={() => setDrawerOpen(false)}
