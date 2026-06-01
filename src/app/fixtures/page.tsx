@@ -16,7 +16,6 @@ async function getAllFixtures(): Promise<Match[]> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/fixtures?limit=72`,
-      // No cacheamos — necesitamos datos frescos para que las predicciones aparezcan
       { cache: "no-store" }
     );
     if (!res.ok) return [];
@@ -43,7 +42,6 @@ export default async function FixturesPage() {
           </Typography>
         </Box>
 
-        {/* Todo el filtrado y la grilla son Client-side */}
         <FixturesClient fixtures={fixtures} />
 
       </Container>

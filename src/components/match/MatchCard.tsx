@@ -1,4 +1,3 @@
-import NextLink from "next/link";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -44,7 +43,6 @@ export default function MatchCard({ match }: MatchCardProps) {
         href={`/fixtures/${match.id}`}
         sx={{ p: 2 }}
       >
-        {/* Header: grupo + fecha */}
         <Box
           sx={{
             display: "flex",
@@ -89,7 +87,6 @@ export default function MatchCard({ match }: MatchCardProps) {
           </Typography>
         </Box>
 
-        {/* Equipos y marcador */}
         <Box
           sx={{
             display: "grid",
@@ -100,12 +97,14 @@ export default function MatchCard({ match }: MatchCardProps) {
           }}
         >
           {/* Home */}
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 1
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
             <Image
               src={getFlagUrl(match.home_team, 40) as string}
               alt={match.home_team}
@@ -120,7 +119,6 @@ export default function MatchCard({ match }: MatchCardProps) {
             </Typography>
           </Box>
 
-          {/* Marcador o VS */}
           <Box sx={{ textAlign: "center", px: 1 }}>
             {hasScore ? (
               <Typography
@@ -143,7 +141,6 @@ export default function MatchCard({ match }: MatchCardProps) {
             )}
           </Box>
 
-          {/* Away */}
           <Box
             sx={{
               display: "flex",
@@ -167,7 +164,6 @@ export default function MatchCard({ match }: MatchCardProps) {
           </Box>
         </Box>
 
-        {/* Ciudad */}
         {match.city && (
           <Typography
             variant="caption"
@@ -183,7 +179,6 @@ export default function MatchCard({ match }: MatchCardProps) {
           </Typography>
         )}
 
-        {/* Probability bar */}
         {match.prediction && !hasScore && (
           <ProbabilityBar
             pHome={match.prediction.p_home_win}

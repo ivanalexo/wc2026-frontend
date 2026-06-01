@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import NextLink from "next/link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Chip from "@mui/material/Chip";
-import Divider from "@mui/material/Divider";
 import LinearProgress from "@mui/material/LinearProgress";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PeopleIcon from "@mui/icons-material/People";
@@ -18,10 +15,6 @@ import { getFlagUrl } from "@/lib/flagCodes";
 import ProbabilityBar from "@/components/shared/ProbabilityBar";
 import LinkButton from "@/components/shared/LinkButton";
 import Image from "next/image";
-
-// =============================================================================
-// Data fetching
-// =============================================================================
 
 async function getTeam(slug: string): Promise<Team | null> {
   try {
@@ -70,10 +63,6 @@ async function getTeamFixtures(teamName: string): Promise<Match[]> {
   }
 }
 
-// =============================================================================
-// Metadata dinámica
-// =============================================================================
-
 export async function generateMetadata({
   params,
 }: {
@@ -87,22 +76,14 @@ export async function generateMetadata({
   };
 }
 
-// =============================================================================
-// Rondas para la tabla de probabilidades
-// =============================================================================
-
 const ROUNDS = [
-  { key: "p_qualify", label: "Clasifica de grupos" },
+  { key: "p_qualify", label: "Clasifica de fase de grupos" },
   { key: "p_reach_r16", label: "Round of 32" },
   { key: "p_reach_qf", label: "Cuartos de final" },
   { key: "p_reach_sf", label: "Semifinales" },
   { key: "p_reach_final", label: "Final" },
   { key: "p_champion", label: "Campeón" },
 ] as const;
-
-// =============================================================================
-// Página
-// =============================================================================
 
 export default async function TeamDetailPage({
   params,
@@ -123,7 +104,6 @@ export default async function TeamDetailPage({
   return (
     <Box sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="md">
-        {/* Back */}
         <Box
           component={LinkButton}
           href="/teams"
@@ -143,7 +123,6 @@ export default async function TeamDetailPage({
           Volver a equipos
         </Box>
 
-        {/* ── HERO DEL EQUIPO ─────────────────────────────────────────── */}
         <Card
           sx={{
             background: `linear-gradient(135deg, #141414 0%, #0F0F0F 100%)`,
@@ -154,9 +133,7 @@ export default async function TeamDetailPage({
         >
           <CardContent sx={{ p: { xs: 3, md: 4 } }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-              {/* Bandera */}
               {flagUrl ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
                 <Image
                   src={flagUrl}
                   alt={`Bandera de ${team.name}`}
@@ -188,7 +165,6 @@ export default async function TeamDetailPage({
                 </Box>
               )}
 
-              {/* Info */}
               <Box>
                 <Typography variant="h4" sx={{ mb: 1, fontWeight: 900 }}>
                   {team.name}
@@ -237,7 +213,6 @@ export default async function TeamDetailPage({
           </CardContent>
         </Card>
 
-        {/* ── PROBABILIDADES POR RONDA ────────────────────────────────── */}
         {simulation && (
           <Card
             sx={{
@@ -257,7 +232,7 @@ export default async function TeamDetailPage({
                   fontWeight: 700,
                 }}
               >
-                Probabilidades por ronda · Monte Carlo (10k simulaciones)
+                Probabilidades por ronda · se aplicó Monte Carlo (10k simulaciones)
               </Typography>
 
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
@@ -315,7 +290,6 @@ export default async function TeamDetailPage({
           </Card>
         )}
 
-        {/* ── PARTIDOS DEL GRUPO ──────────────────────────────────────── */}
         {fixtures.length > 0 && (
           <Card
             sx={{
@@ -405,7 +379,6 @@ export default async function TeamDetailPage({
           </Card>
         )}
 
-        {/* ── PLACEHOLDER JUGADORES ───────────────────────────────────── */}
         <Card
           sx={{
             background: "#0A0A0A",
@@ -428,7 +401,7 @@ export default async function TeamDetailPage({
               color="text.secondary"
               sx={{ mt: 0.5, opacity: 0.5 }}
             >
-              Próximamente · Requiere sincronización con API-Football
+              Próximamente...
             </Typography>
           </CardContent>
         </Card>

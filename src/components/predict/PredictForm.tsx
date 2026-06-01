@@ -22,29 +22,56 @@ import { PredictionResponse, ScorePredictionResponse } from "@/lib/types";
 import api, { endpoints } from "@/lib/api";
 import ProbabilityBar from "@/components/shared/ProbabilityBar";
 
-// =============================================================================
-// Fallback — 48 equipos del Mundial 2026 si la API no responde
-// =============================================================================
 const WC2026_TEAMS = [
-  "Algeria","Argentina","Australia","Austria",
-  "Belgium","Bosnia and Herzegovina","Brazil",
-  "Canada","Cape Verde","Colombia","Croatia","Curacao","Czech Republic",
-  "DR Congo","Ecuador","Egypt","England",
-  "France","Germany","Ghana",
-  "Haiti","Iraq","Iran","Ivory Coast",
-  "Japan","Jordan",
-  "Mexico","Morocco",
-  "Netherlands","New Zealand","Norway",
-  "Panama","Paraguay","Portugal",
+  "Algeria",
+  "Argentina",
+  "Australia",
+  "Austria",
+  "Belgium",
+  "Bosnia and Herzegovina",
+  "Brazil",
+  "Canada",
+  "Cape Verde",
+  "Colombia",
+  "Croatia",
+  "Curacao",
+  "Czech Republic",
+  "DR Congo",
+  "Ecuador",
+  "Egypt",
+  "England",
+  "France",
+  "Germany",
+  "Ghana",
+  "Haiti",
+  "Iraq",
+  "Iran",
+  "Ivory Coast",
+  "Japan",
+  "Jordan",
+  "Mexico",
+  "Morocco",
+  "Netherlands",
+  "New Zealand",
+  "Norway",
+  "Panama",
+  "Paraguay",
+  "Portugal",
   "Qatar",
-  "Saudi Arabia","Scotland","Senegal","South Africa","South Korea","Spain","Sweden","Switzerland",
-  "Tunisia","Turkey",
-  "United States","Uruguay","Uzbekistan",
+  "Saudi Arabia",
+  "Scotland",
+  "Senegal",
+  "South Africa",
+  "South Korea",
+  "Spain",
+  "Sweden",
+  "Switzerland",
+  "Tunisia",
+  "Turkey",
+  "United States",
+  "Uruguay",
+  "Uzbekistan",
 ].sort();
-
-// =============================================================================
-// Helpers
-// =============================================================================
 
 function outcomeLabel(prediction: "H" | "D" | "A", home: string, away: string) {
   if (prediction === "H") return `${home} gana`;
@@ -58,38 +85,30 @@ function outcomeColor(prediction: "H" | "D" | "A") {
   return "rgba(255,255,255,0.4)";
 }
 
-// =============================================================================
-// Props
-// =============================================================================
-
 interface PredictFormProps {
   initialTeams: string[];
 }
-
-// =============================================================================
-// Componente principal
-// =============================================================================
 
 export default function PredictForm({ initialTeams }: PredictFormProps) {
   const teams = initialTeams.length > 0 ? initialTeams : WC2026_TEAMS;
 
   const [homeTeam, setHomeTeam] = useState<string | null>(null);
   const [awayTeam, setAwayTeam] = useState<string | null>(null);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState<string | null>(null);
-  const [matchResult, setMatchResult] = useState<PredictionResponse | null>(null);
-  const [scoreResult, setScoreResult] = useState<ScorePredictionResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [matchResult, setMatchResult] = useState<PredictionResponse | null>(
+    null,
+  );
+  const [scoreResult, setScoreResult] =
+    useState<ScorePredictionResponse | null>(null);
 
-  // --- Swap home ↔ away ---
   const handleSwap = () => {
     setHomeTeam(awayTeam);
     setAwayTeam(homeTeam);
-    // Limpia resultados al cambiar orden
     setMatchResult(null);
     setScoreResult(null);
   };
 
-  // --- Predict ---
   const handlePredict = async () => {
     if (!homeTeam || !awayTeam) return;
     if (homeTeam === awayTeam) {
@@ -103,7 +122,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
     setScoreResult(null);
 
     try {
-      // Llamadas en paralelo para menor latencia
       const [matchRes, scoreRes] = await Promise.allSettled([
         api.post<PredictionResponse>(endpoints.predictMatch, {
           home_team: homeTeam,
@@ -118,7 +136,9 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
       if (matchRes.status === "fulfilled") {
         setMatchResult(matchRes.value.data);
       } else {
-        setError("No se pudo generar la predicción. ¿Están los artefactos ML cargados?");
+        setError(
+          "No se pudo generar la predicción. ¿Están los artefactos ML cargados?",
+        );
       }
 
       if (scoreRes.status === "fulfilled") {
@@ -131,11 +151,11 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
     }
   };
 
-  const canPredict = !!homeTeam && !!awayTeam && homeTeam !== awayTeam && !loading;
+  const canPredict =
+    !!homeTeam && !!awayTeam && homeTeam !== awayTeam && !loading;
 
   return (
     <Box>
-      {/* ── FORMULARIO ───────────────────────────────────────────────────── */}
       <Card
         sx={{
           background: "#111",
@@ -145,8 +165,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
         }}
       >
         <CardContent sx={{ p: { xs: 2.5, md: 4 } }}>
-
-          {/* Selectores */}
           <Box
             sx={{
               display: "grid",
@@ -156,16 +174,29 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
               mb: 3,
             }}
           >
-            {/* Home */}
             <Box>
-              <Typography variant="caption" sx={{ color: FIFA.red, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "block", mb: 1 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: FIFA.red,
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  display: "block",
+                  mb: 1,
+                }}
+              >
                 Local
               </Typography>
               <Autocomplete
                 options={teams}
                 value={homeTeam}
                 getOptionDisabled={(option) => option === awayTeam}
-                onChange={(_, v) => { setHomeTeam(v); setMatchResult(null); setScoreResult(null); }}
+                onChange={(_, v) => {
+                  setHomeTeam(v);
+                  setMatchResult(null);
+                  setScoreResult(null);
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -185,30 +216,52 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
               />
             </Box>
 
-            {/* Swap */}
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "flex-end", pb: 0.5 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-end",
+                pb: 0.5,
+              }}
+            >
               <IconButton
                 onClick={handleSwap}
                 sx={{
                   border: "1px solid rgba(255,255,255,0.1)",
                   backgroundColor: "#0D0D0D",
-                  "&:hover": { backgroundColor: "rgba(230,0,0,0.1)", borderColor: FIFA.red },
+                  "&:hover": {
+                    backgroundColor: "rgba(230,0,0,0.1)",
+                    borderColor: FIFA.red,
+                  },
                 }}
               >
                 <SwapHorizIcon sx={{ fontSize: 20 }} />
               </IconButton>
             </Box>
 
-            {/* Away */}
             <Box>
-              <Typography variant="caption" sx={{ color: FIFA.royalBlue, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "block", mb: 1 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: FIFA.royalBlue,
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  display: "block",
+                  mb: 1,
+                }}
+              >
                 Visitante
               </Typography>
               <Autocomplete
                 options={teams}
                 value={awayTeam}
                 getOptionDisabled={(option) => option === homeTeam}
-                onChange={(_, v) => { setAwayTeam(v); setMatchResult(null); setScoreResult(null); }}
+                onChange={(_, v) => {
+                  setAwayTeam(v);
+                  setMatchResult(null);
+                  setScoreResult(null);
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -220,7 +273,9 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                         backgroundColor: "#0D0D0D",
                         "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
                         "&:hover fieldset": { borderColor: FIFA.royalBlue },
-                        "&.Mui-focused fieldset": { borderColor: FIFA.royalBlue },
+                        "&.Mui-focused fieldset": {
+                          borderColor: FIFA.royalBlue,
+                        },
                       },
                     }}
                   />
@@ -229,14 +284,19 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
             </Box>
           </Box>
 
-          {/* Error */}
           {error && (
-            <Alert severity="error" sx={{ mb: 2, backgroundColor: "rgba(228,0,90,0.1)", color: FIFA.hotPink }}>
+            <Alert
+              severity="error"
+              sx={{
+                mb: 2,
+                backgroundColor: "rgba(228,0,90,0.1)",
+                color: FIFA.hotPink,
+              }}
+            >
               {error}
             </Alert>
           )}
 
-          {/* Botón */}
           <Button
             onClick={handlePredict}
             disabled={!canPredict}
@@ -244,7 +304,13 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
             color="primary"
             fullWidth
             size="large"
-            startIcon={loading ? <CircularProgress size={18} color="inherit" /> : <SportsSoccerIcon />}
+            startIcon={
+              loading ? (
+                <CircularProgress size={18} color="inherit" />
+              ) : (
+                <SportsSoccerIcon />
+              )
+            }
             sx={{ fontWeight: 700, py: 1.5, fontSize: "1rem" }}
           >
             {loading ? "Prediciendo..." : "Predecir partido"}
@@ -252,12 +318,9 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
         </CardContent>
       </Card>
 
-      {/* ── RESULTADOS ───────────────────────────────────────────────────── */}
       <Collapse in={!!matchResult}>
         {matchResult && (
           <Box>
-
-            {/* Resultado principal */}
             <Card
               sx={{
                 background: "#111",
@@ -266,8 +329,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
               }}
             >
               <CardContent sx={{ p: { xs: 2.5, md: 4 } }}>
-
-                {/* Equipos */}
                 <Box
                   sx={{
                     display: "grid",
@@ -277,12 +338,14 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                     mb: 3,
                   }}
                 >
-                  {/* Home team */}
                   <Box sx={{ textAlign: "center" }}>
                     <Typography
                       variant="h5"
                       sx={{
-                        color: matchResult.prediction === "H" ? FIFA.red : "text.primary",
+                        color:
+                          matchResult.prediction === "H"
+                            ? FIFA.red
+                            : "text.primary",
                         transition: "color 0.3s",
                         fontWeight: 900,
                       }}
@@ -296,29 +359,39 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                     )}
                   </Box>
 
-                  {/* VS / outcome */}
                   <Box sx={{ textAlign: "center" }}>
-                    <Typography variant="caption" color="text.secondary" sx={{ letterSpacing: "0.15em" }}>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ letterSpacing: "0.15em" }}
+                    >
                       VS
                     </Typography>
                     {matchResult.elo_diff !== null && (
                       <Typography
                         variant="caption"
-                        sx={{ display: "block", color: "text.secondary", fontSize: "0.65rem" }}
+                        sx={{
+                          display: "block",
+                          color: "text.secondary",
+                          fontSize: "0.65rem",
+                        }}
                       >
-                        Δ ELO {matchResult.elo_diff > 0 ? "+" : ""}{matchResult.elo_diff}
+                        Δ ELO {matchResult.elo_diff > 0 ? "+" : ""}
+                        {matchResult.elo_diff}
                       </Typography>
                     )}
                   </Box>
 
-                  {/* Away team */}
                   <Box sx={{ textAlign: "center" }}>
                     <Typography
                       variant="h5"
                       sx={{
-                        color: matchResult.prediction === "A" ? FIFA.royalBlue : "text.primary",
+                        color:
+                          matchResult.prediction === "A"
+                            ? FIFA.royalBlue
+                            : "text.primary",
                         transition: "color 0.3s",
-                        fontWeight: 900
+                        fontWeight: 900,
                       }}
                     >
                       {matchResult.away_team}
@@ -331,7 +404,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                   </Box>
                 </Box>
 
-                {/* Probability bar */}
                 <ProbabilityBar
                   pHome={matchResult.p_home_win}
                   pDraw={matchResult.p_draw}
@@ -341,12 +413,17 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                   height={10}
                 />
 
-                <Divider sx={{ borderColor: "rgba(255,255,255,0.07)", my: 3 }} />
+                <Divider
+                  sx={{ borderColor: "rgba(255,255,255,0.07)", my: 3 }}
+                />
 
-                {/* Outcome announcement */}
                 <Box sx={{ textAlign: "center" }}>
                   <Chip
-                    label={outcomeLabel(matchResult.prediction, matchResult.home_team, matchResult.away_team)}
+                    label={outcomeLabel(
+                      matchResult.prediction,
+                      matchResult.home_team,
+                      matchResult.away_team,
+                    )}
                     sx={{
                       backgroundColor: `${outcomeColor(matchResult.prediction)}22`,
                       color: outcomeColor(matchResult.prediction),
@@ -358,20 +435,29 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                       letterSpacing: "0.02em",
                     }}
                   />
-                  <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1 }}>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ display: "block", mt: 1 }}
+                  >
                     predicción del modelo XGBoost
                   </Typography>
                   {matchResult.cached && (
-                    <Typography variant="caption" sx={{ color: "text.secondary", opacity: 0.5, fontSize: "0.65rem" }}>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "text.secondary",
+                        opacity: 0.5,
+                        fontSize: "0.65rem",
+                      }}
+                    >
                       (resultado cacheado)
                     </Typography>
                   )}
                 </Box>
-
               </CardContent>
             </Card>
 
-            {/* SHAP Explanation */}
             {matchResult.explanation && (
               <Card
                 sx={{
@@ -381,14 +467,32 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                 }}
               >
                 <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      mb: 2,
+                    }}
+                  >
                     <TrendingUpIcon sx={{ color: FIFA.lime, fontSize: 20 }} />
-                    <Typography variant="subtitle2" sx={{ letterSpacing: "0.06em", textTransform: "uppercase", fontSize: "0.75rem", fontWeight: 700 }}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                      }}
+                    >
                       Por qué este resultado
                     </Typography>
                   </Box>
 
-                  <Typography variant="body1" sx={{ color: FIFA.white, mb: 2, fontWeight: 600 }}>
+                  <Typography
+                    variant="body1"
+                    sx={{ color: FIFA.white, mb: 2, fontWeight: 600 }}
+                  >
                     {matchResult.explanation.main_factor}
                   </Typography>
 
@@ -412,7 +516,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
               </Card>
             )}
 
-            {/* Score Prediction */}
             {scoreResult && (
               <Card
                 sx={{
@@ -423,42 +526,63 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                 <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
                   <Typography
                     variant="subtitle2"
-                    sx={{ letterSpacing: "0.06em", textTransform: "uppercase", fontSize: "0.75rem", fontWeight: 700, mb: 2 }}
+                    sx={{
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      mb: 2,
+                    }}
                   >
                     Marcador probable · Poisson + Monte Carlo
                   </Typography>
 
-                  {/* Marcador más probable */}
                   <Box sx={{ textAlign: "center", mb: 3 }}>
                     <Typography
                       variant="h2"
-                      sx={{ letterSpacing: "0.1em", color: FIFA.white, fontWeight: 900 }}
+                      sx={{
+                        letterSpacing: "0.1em",
+                        color: FIFA.white,
+                        fontWeight: 900,
+                      }}
                     >
                       {scoreResult.predicted_score}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      λ {scoreResult.home_team}: {scoreResult.expected_home_goals} · λ {scoreResult.away_team}: {scoreResult.expected_away_goals}
+                      λ {scoreResult.home_team}:{" "}
+                      {scoreResult.expected_home_goals} · λ{" "}
+                      {scoreResult.away_team}: {scoreResult.expected_away_goals}
                     </Typography>
                   </Box>
 
-                  {/* Top scores */}
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, justifyContent: "center" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 1,
+                      justifyContent: "center",
+                    }}
+                  >
                     {scoreResult.top_scores.map(({ score, probability }) => (
                       <Chip
                         key={score}
                         label={`${score}  ${(probability * 100).toFixed(1)}%`}
                         size="small"
                         sx={{
-                          backgroundColor: score === scoreResult.predicted_score
-                            ? "rgba(230,0,0,0.15)"
-                            : "rgba(255,255,255,0.05)",
-                          color: score === scoreResult.predicted_score
-                            ? FIFA.red
-                            : "text.secondary",
-                          border: score === scoreResult.predicted_score
-                            ? `1px solid ${FIFA.red}55`
-                            : "1px solid rgba(255,255,255,0.08)",
-                          fontWeight: score === scoreResult.predicted_score ? 700 : 400,
+                          backgroundColor:
+                            score === scoreResult.predicted_score
+                              ? "rgba(230,0,0,0.15)"
+                              : "rgba(255,255,255,0.05)",
+                          color:
+                            score === scoreResult.predicted_score
+                              ? FIFA.red
+                              : "text.secondary",
+                          border:
+                            score === scoreResult.predicted_score
+                              ? `1px solid ${FIFA.red}55`
+                              : "1px solid rgba(255,255,255,0.08)",
+                          fontWeight:
+                            score === scoreResult.predicted_score ? 700 : 400,
                           fontFamily: "monospace",
                           fontSize: "0.78rem",
                         }}
@@ -469,7 +593,12 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                   <Typography
                     variant="caption"
                     color="text.secondary"
-                    sx={{ display: "block", textAlign: "center", mt: 2, opacity: 0.5 }}
+                    sx={{
+                      display: "block",
+                      textAlign: "center",
+                      mt: 2,
+                      opacity: 0.5,
+                    }}
                   >
                     {scoreResult.n_simulations.toLocaleString()} simulaciones
                   </Typography>

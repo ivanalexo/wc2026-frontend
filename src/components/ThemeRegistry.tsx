@@ -8,17 +8,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "@/theme/theme";
 import { useState } from "react";
 
-// =============================================================================
-// ThemeRegistry
-// =============================================================================
-// Patrón recomendado por MUI para Next.js 14 App Router.
-// Evita el hydration mismatch que ocurre cuando emotion genera classnames
-// distintos en server y client.
-//
-// Refs:
-//   https://mui.com/material-ui/integrations/nextjs/#app-router
-// =============================================================================
-
 export default function ThemeRegistry({
   children,
 }: {

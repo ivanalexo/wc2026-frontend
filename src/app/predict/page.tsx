@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description: "Predice el resultado de cualquier partido del Mundial 2026",
 };
 
-// Obtiene los nombres de equipos desde la DB para el Autocomplete.
-// Si falla (backend apagado), usa el fallback hardcodeado en PredictForm.
 async function getTeamNames(): Promise<string[]> {
   try {
     const res = await fetch(
@@ -42,7 +40,6 @@ export default async function PredictPage() {
       }}
     >
       <Container maxWidth="md">
-        {/* Header */}
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
             variant="overline"
@@ -61,7 +58,6 @@ export default async function PredictPage() {
           </Typography>
         </Box>
 
-        {/* Client Component con toda la lógica interactiva */}
         <PredictForm initialTeams={teamNames} />
       </Container>
     </Box>

@@ -5,32 +5,32 @@ import { createTheme } from "@mui/material/styles";
 // =============================================================================
 export const FIFA = {
   // Oscuros
-  burgundy:  "#7B1A23",
-  deepPurple:"#6B00B4",
-  navy:      "#1C1C6E",
-  darkTeal:  "#0D3D3A",
+  burgundy: "#7B1A23",
+  deepPurple: "#6B00B4",
+  navy: "#1C1C6E",
+  darkTeal: "#0D3D3A",
 
   // Vivos
-  red:       "#E60000",
-  lavender:  "#C8A8E8",
+  red: "#E60000",
+  lavender: "#C8A8E8",
   royalBlue: "#3333CC",
-  green:     "#00CC44",
+  green: "#00CC44",
 
   // Medios
-  orange:    "#FF5500",
-  mauve:     "#C89090",
-  skyBlue:   "#44AAFF",
-  lime:      "#CCFF00",
+  orange: "#FF5500",
+  mauve: "#C89090",
+  skyBlue: "#44AAFF",
+  lime: "#CCFF00",
 
   // Neon / claros
-  salmon:    "#FF9977",
-  hotPink:   "#E0005A",
+  salmon: "#FF9977",
+  hotPink: "#E0005A",
   turquoise: "#00FFCC",
-  yellow:    "#FFFF00",
+  yellow: "#FFFF00",
 
   // Neutros
-  black:     "#000000",
-  white:     "#FFFFFF",
+  black: "#000000",
+  white: "#FFFFFF",
 } as const;
 
 // =============================================================================
@@ -41,26 +41,26 @@ const theme = createTheme({
     mode: "dark",
 
     primary: {
-      main:         FIFA.red,
-      dark:         FIFA.burgundy,
-      light:        FIFA.salmon,
+      main: FIFA.red,
+      dark: FIFA.burgundy,
+      light: FIFA.salmon,
       contrastText: FIFA.white,
     },
 
     secondary: {
-      main:         FIFA.royalBlue,
-      dark:         FIFA.navy,
-      light:        FIFA.skyBlue,
+      main: FIFA.royalBlue,
+      dark: FIFA.navy,
+      light: FIFA.skyBlue,
       contrastText: FIFA.white,
     },
 
     background: {
       default: "#080808",
-      paper:   "#111111",
+      paper: "#111111",
     },
 
     text: {
-      primary:   FIFA.white,
+      primary: FIFA.white,
       secondary: "#AAAAAA",
     },
 

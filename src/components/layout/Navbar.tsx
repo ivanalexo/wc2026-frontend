@@ -19,22 +19,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { FIFA } from "@/theme/theme";
 import Image from "next/image";
-import fifaLogo from "../../../public/images/fifa-logo.png"
+import fifaLogo from "../../../public/images/fifa-logo.png";
 
-// =============================================================================
-// Definición de rutas
-// =============================================================================
 const NAV_LINKS = [
-  { label: "Partidos",   href: "/fixtures"  },
-  { label: "Grupos",     href: "/groups"    },
-  { label: "Equipos",    href: "/teams"     },
-  { label: "Predictor",  href: "/predict"   },
-  { label: "Simulación", href: "/simulate"  },
+  { label: "Partidos", href: "/fixtures" },
+  { label: "Grupos", href: "/groups" },
+  { label: "Equipos", href: "/teams" },
+  { label: "Predictor", href: "/predict" },
+  { label: "Simulación", href: "/simulate" },
 ] as const;
 
-// =============================================================================
-// Navbar
-// =============================================================================
 export default function Navbar() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -54,21 +48,20 @@ export default function Navbar() {
         }}
       >
         <Toolbar sx={{ px: { xs: 2, md: 4 }, height: 64 }}>
-
-          {/* Logo */}
-          <NextLink href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-            <Image
-              src={fifaLogo}
-              alt="FIFA 2026"
-              width={65}
-              height={65}
-            />
+          <NextLink
+            href="/"
+            style={{
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <Image src={fifaLogo} alt="FIFA 2026" width={65} height={65} />
           </NextLink>
 
-          {/* Spacer */}
           <Box sx={{ flex: 1 }} />
 
-          {/* Desktop nav */}
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 0.5 }}>
             {NAV_LINKS.map(({ label, href }) => (
               <Button
@@ -91,7 +84,6 @@ export default function Navbar() {
                     color: FIFA.white,
                     backgroundColor: "rgba(255,255,255,0.06)",
                   },
-                  // Indicador activo — línea inferior lime
                   "&::after": {
                     content: '""',
                     position: "absolute",
@@ -114,9 +106,12 @@ export default function Navbar() {
             ))}
           </Box>
 
-          {/* Mobile hamburger */}
           <IconButton
-            sx={{ display: { xs: "flex", md: "none" }, color: FIFA.white, ml: 1 }}
+            sx={{
+              display: { xs: "flex", md: "none" },
+              color: FIFA.white,
+              ml: 1,
+            }}
             onClick={() => setDrawerOpen(true)}
             aria-label="Abrir menú"
           >
@@ -125,7 +120,6 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer */}
       <Drawer
         anchor="right"
         open={drawerOpen}
@@ -140,7 +134,6 @@ export default function Navbar() {
           },
         }}
       >
-        {/* Header del drawer */}
         <Box
           sx={{
             display: "flex",
@@ -151,12 +144,7 @@ export default function Navbar() {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Image
-              src={fifaLogo}
-              alt="FIFA 2026"
-              width={65}
-              height={65}
-            />
+            <Image src={fifaLogo} alt="FIFA 2026" width={65} height={65} />
           </Box>
           <IconButton
             onClick={() => setDrawerOpen(false)}
@@ -196,7 +184,9 @@ export default function Navbar() {
                       component="span"
                       sx={{
                         fontWeight: isActive(href) ? 700 : 400,
-                        color: isActive(href) ? FIFA.white : "rgba(255,255,255,0.6)",
+                        color: isActive(href)
+                          ? FIFA.white
+                          : "rgba(255,255,255,0.6)",
                         fontSize: "0.9rem",
                         letterSpacing: "0.06em",
                         textTransform: "uppercase",

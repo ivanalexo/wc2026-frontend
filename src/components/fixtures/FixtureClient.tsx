@@ -28,7 +28,6 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
     return counts;
   }, [fixtures]);
 
-  // Filtrado instantáneo en memoria
   const filtered = useMemo(
     () =>
       selectedGroup
@@ -58,7 +57,6 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
 
   return (
     <Box>
-      {/* Barra de filtros */}
       <Box
         sx={{
           display: "flex",
@@ -98,14 +96,12 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
         ))}
       </Box>
 
-      {/* Subtítulo dinámico */}
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         {selectedGroup
           ? `Grupo ${selectedGroup} — ${filtered.length} partidos`
           : `Mostrando ${filtered.length} partidos`}
       </Typography>
 
-      {/* Grid */}
       {filtered.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 10 }}>
           <SportsSoccerIcon sx={{ fontSize: 56, color: "rgba(255,255,255,0.1)", mb: 2 }} />

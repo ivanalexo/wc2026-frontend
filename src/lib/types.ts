@@ -1,7 +1,3 @@
-// =============================================================================
-// Tipos alineados con los schemas Pydantic del backend
-// =============================================================================
-
 export interface Team {
   id: number;
   name: string;

@@ -5,15 +5,31 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { FIFA } from "@/theme/theme";
 
-const GROUPS = ["A","B","C","D","E","F","G","H","I","J","K","L"] as const;
+const GROUPS = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+] as const;
 
 interface GroupFilterProps {
   currentGroup: string | null;
   matchCounts: Record<string, number>;
 }
 
-export default function GroupFilter({ currentGroup, matchCounts }: GroupFilterProps) {
-  const router       = useRouter();
+export default function GroupFilter({
+  currentGroup,
+  matchCounts,
+}: GroupFilterProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const navigate = (group: string | null) => {
@@ -54,18 +70,19 @@ export default function GroupFilter({ currentGroup, matchCounts }: GroupFilterPr
         alignItems: "center",
       }}
     >
-      {/* Todos */}
-      <Button
-        onClick={() => navigate(null)}
-        sx={btnSx(!currentGroup)}
-      >
+      <Button onClick={() => navigate(null)} sx={btnSx(!currentGroup)}>
         Todos
       </Button>
 
-      {/* Divisor visual */}
-      <Box sx={{ width: 1, height: 24, backgroundColor: "rgba(255,255,255,0.1)", mx: 0.5 }} />
+      <Box
+        sx={{
+          width: 1,
+          height: 24,
+          backgroundColor: "rgba(255,255,255,0.1)",
+          mx: 0.5,
+        }}
+      />
 
-      {/* Grupos A-L */}
       {GROUPS.map((g) => (
         <Button
           key={g}

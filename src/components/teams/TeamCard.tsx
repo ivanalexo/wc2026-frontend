@@ -19,7 +19,6 @@ interface TeamCardProps {
   rank?: number;
 }
 
-// ELO máximo aproximado para escalar la barra (España ~2171)
 const ELO_MAX = 2200;
 const ELO_MIN = 1400;
 
@@ -29,11 +28,10 @@ export default function TeamCard({
   group,
   elo,
   pChampion,
-  rank,
 }: TeamCardProps) {
-  const flagUrl   = getFlagUrl(name, 160);
-  const eloWidth  = elo ? ((elo - ELO_MIN) / (ELO_MAX - ELO_MIN)) * 100 : 0;
-  const champPct  = pChampion ? (pChampion * 100).toFixed(1) : null;
+  const flagUrl = getFlagUrl(name, 160);
+  const eloWidth = elo ? ((elo - ELO_MIN) / (ELO_MAX - ELO_MIN)) * 100 : 0;
+  const champPct = pChampion ? (pChampion * 100).toFixed(1) : null;
 
   return (
     <Card
@@ -52,9 +50,14 @@ export default function TeamCard({
       <CardActionArea
         component={NextLink}
         href={`/teams/${slug}`}
-        sx={{ p: 2.5, height: "100%", display: "flex", flexDirection: "column", alignItems: "flex-start" }}
+        sx={{
+          p: 2.5,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+        }}
       >
-        {/* Bandera */}
         <Box
           sx={{
             width: "100%",
@@ -64,7 +67,6 @@ export default function TeamCard({
           }}
         >
           {flagUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
             <Image
               src={flagUrl}
               alt={`Bandera de ${name}`}
@@ -79,9 +81,13 @@ export default function TeamCard({
           ) : (
             <Box
               sx={{
-                width: 80, height: 54, borderRadius: 1,
+                width: 80,
+                height: 54,
+                borderRadius: 1,
                 backgroundColor: "rgba(255,255,255,0.06)",
-                display: "flex", alignItems: "center", justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               <Typography variant="caption" color="text.secondary">
@@ -91,9 +97,19 @@ export default function TeamCard({
           )}
         </Box>
 
-        {/* Nombre y grupo */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1, width: "100%" }}>
-          <Typography variant="body1" sx={{ flex: 1, lineHeight: 1.2, fontWeight: 700 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            mb: 1,
+            width: "100%",
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{ flex: 1, lineHeight: 1.2, fontWeight: 700 }}
+          >
             {name}
           </Typography>
           {group && (
@@ -101,31 +117,53 @@ export default function TeamCard({
               label={group}
               size="small"
               sx={{
-                height: 20, fontSize: "0.65rem", fontWeight: 800,
+                height: 20,
+                fontSize: "0.65rem",
+                fontWeight: 800,
                 backgroundColor: "rgba(204,255,0,0.1)",
-                color: FIFA.lime, border: `1px solid ${FIFA.lime}33`,
+                color: FIFA.lime,
+                border: `1px solid ${FIFA.lime}33`,
                 letterSpacing: "0.06em",
               }}
             />
           )}
         </Box>
 
-        {/* ELO */}
         {elo && (
           <Box sx={{ width: "100%", mb: 1.5 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-              <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.65rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}
+            >
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{
+                  fontSize: "0.65rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}
+              >
                 ELO
               </Typography>
-              <Typography variant="caption" sx={{ fontSize: "0.7rem", fontWeight: 700 }}>
+              <Typography
+                variant="caption"
+                sx={{ fontSize: "0.7rem", fontWeight: 700 }}
+              >
                 {elo.toLocaleString()}
               </Typography>
             </Box>
-            <Box sx={{ height: 3, borderRadius: 2, backgroundColor: "rgba(255,255,255,0.07)" }}>
+            <Box
+              sx={{
+                height: 3,
+                borderRadius: 2,
+                backgroundColor: "rgba(255,255,255,0.07)",
+              }}
+            >
               <Box
                 sx={{
                   width: `${Math.min(eloWidth, 100)}%`,
-                  height: "100%", borderRadius: 2,
+                  height: "100%",
+                  borderRadius: 2,
                   backgroundColor: FIFA.skyBlue,
                 }}
               />
@@ -133,11 +171,20 @@ export default function TeamCard({
           </Box>
         )}
 
-        {/* Probabilidad campeón */}
         {champPct && (
-          <Box sx={{ mt: "auto", pt: 1.5, borderTop: "1px solid rgba(255,255,255,0.06)", width: "100%" }}>
+          <Box
+            sx={{
+              mt: "auto",
+              pt: 1.5,
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+              width: "100%",
+            }}
+          >
             <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
-              <Typography variant="h6" sx={{ color: FIFA.red, fontWeight: 900 }}>
+              <Typography
+                variant="h6"
+                sx={{ color: FIFA.red, fontWeight: 900 }}
+              >
                 {champPct}%
               </Typography>
               <Typography variant="caption" color="text.secondary">
@@ -146,7 +193,6 @@ export default function TeamCard({
             </Box>
           </Box>
         )}
-
       </CardActionArea>
     </Card>
   );
