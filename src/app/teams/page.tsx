@@ -86,7 +86,7 @@ export default async function TeamsPage() {
         {teams.length === 0 ? (
           <Box sx={{ textAlign: "center", py: 10 }}>
             <GroupsIcon
-              sx={{ fontSize: 56, color: "rgba(255,255,255,0.1)", mb: 2 }}
+              sx={{ fontSize: 56, color: "rgba(0,0,0,0.12)", mb: 2 }}
             />
             <Typography
               variant="h6"

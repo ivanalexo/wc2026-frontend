@@ -44,10 +44,7 @@ export default function MatchScorePredictor({
 
   return (
     <Card
-      sx={{
-        background: "#0F0F0F",
-        border: "1px solid rgba(255,255,255,0.06)",
-      }}
+      sx={{}}
     >
       <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
         <Typography
@@ -64,9 +61,7 @@ export default function MatchScorePredictor({
             variant="outlined"
             startIcon={loading ? <CircularProgress size={16} /> : <SportsSoccerIcon />}
             sx={{
-              borderColor: "rgba(255,255,255,0.15)",
-              color: FIFA.white,
-              "&:hover": { borderColor: FIFA.lime, color: FIFA.lime },
+              "&:hover": { borderColor: FIFA.royalBlue, color: FIFA.royalBlue },
             }}
           >
             {loading ? "Simulando..." : "Calcular marcador probable"}
@@ -84,7 +79,7 @@ export default function MatchScorePredictor({
             <Box sx={{ textAlign: "center", mb: 3 }}>
               <Typography
                 variant="h2"
-                sx={{ letterSpacing: "0.12em", color: FIFA.white, fontWeight: 900 }}
+                sx={{ letterSpacing: "0.12em", fontWeight: 900 }}
               >
                 {result.predicted_score}
               </Typography>
@@ -101,12 +96,12 @@ export default function MatchScorePredictor({
                   size="small"
                   sx={{
                     backgroundColor: score === result.predicted_score
-                      ? "rgba(230,0,0,0.15)"
-                      : "rgba(255,255,255,0.05)",
+                      ? "rgba(230,0,0,0.12)"
+                      : "rgba(0,0,0,0.04)",
                     color: score === result.predicted_score ? FIFA.red : "text.secondary",
                     border: score === result.predicted_score
                       ? `1px solid ${FIFA.red}55`
-                      : "1px solid rgba(255,255,255,0.08)",
+                      : "1px solid rgba(0,0,0,0.1)",
                     fontWeight: score === result.predicted_score ? 700 : 400,
                     fontFamily: "monospace",
                   }}

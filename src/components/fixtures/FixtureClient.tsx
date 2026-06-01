@@ -44,13 +44,13 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
     letterSpacing: "0.06em",
     borderRadius: 1,
     border: "1px solid",
-    borderColor: active ? FIFA.lime : "rgba(255,255,255,0.1)",
-    color: active ? FIFA.lime : "rgba(255,255,255,0.45)",
-    backgroundColor: active ? "rgba(204,255,0,0.08)" : "transparent",
+    borderColor: active ? FIFA.red : "rgba(0,0,0,0.18)",
+    color: active ? FIFA.red : "text.secondary",
+    backgroundColor: active ? "rgba(230,0,0,0.06)" : "transparent",
     "&:hover": {
-      borderColor: FIFA.lime,
-      color: FIFA.lime,
-      backgroundColor: "rgba(204,255,0,0.06)",
+      borderColor: FIFA.red,
+      color: FIFA.red,
+      backgroundColor: "rgba(230,0,0,0.05)",
     },
     transition: "all 0.15s",
   });
@@ -65,7 +65,7 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
           alignItems: "center",
           mb: 4,
           pb: 3,
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
         <Button
@@ -78,7 +78,7 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
           </Box>
         </Button>
 
-        <Box sx={{ width: 1, height: 22, backgroundColor: "rgba(255,255,255,0.1)", mx: 0.25 }} />
+        <Box sx={{ width: 1, height: 22, backgroundColor: "rgba(0,0,0,0.12)", mx: 0.25 }} />
 
         {GROUPS.map((g) => (
           <Button
@@ -104,7 +104,7 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
 
       {filtered.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 10 }}>
-          <SportsSoccerIcon sx={{ fontSize: 56, color: "rgba(255,255,255,0.1)", mb: 2 }} />
+          <SportsSoccerIcon sx={{ fontSize: 56, color: "rgba(0,0,0,0.12)", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400 }}>
             No hay partidos para el Grupo {selectedGroup}
           </Typography>

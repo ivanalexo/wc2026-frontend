@@ -115,7 +115,7 @@ export default async function TeamDetailPage({
             textDecoration: "none",
             mb: 3,
             fontSize: "0.85rem",
-            "&:hover": { color: FIFA.white },
+            "&:hover": { color: "text.primary" },
             transition: "color 0.2s",
           }}
         >
@@ -125,8 +125,6 @@ export default async function TeamDetailPage({
 
         <Card
           sx={{
-            background: `linear-gradient(135deg, #141414 0%, #0F0F0F 100%)`,
-            border: "1px solid rgba(255,255,255,0.08)",
             borderTop: `3px solid ${FIFA.red}`,
             mb: 3,
           }}
@@ -142,7 +140,7 @@ export default async function TeamDetailPage({
                   style={{
                     objectFit: "cover",
                     borderRadius: 6,
-                    border: "1px solid rgba(255,255,255,0.12)",
+                    border: "1px solid rgba(0,0,0,0.12)",
                     flexShrink: 0,
                   }}
                 />
@@ -152,7 +150,7 @@ export default async function TeamDetailPage({
                     width: 100,
                     height: 67,
                     borderRadius: 1.5,
-                    backgroundColor: "rgba(255,255,255,0.06)",
+                    backgroundColor: "rgba(0,0,0,0.04)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -175,9 +173,9 @@ export default async function TeamDetailPage({
                       label={`Grupo ${team.group}`}
                       size="small"
                       sx={{
-                        backgroundColor: "rgba(204,255,0,0.1)",
-                        color: FIFA.lime,
-                        border: `1px solid ${FIFA.lime}44`,
+                        backgroundColor: "rgba(51,51,204,0.1)",
+                        color: FIFA.royalBlue,
+                        border: `1px solid ${FIFA.royalBlue}44`,
                         fontWeight: 700,
                         fontSize: "0.7rem",
                       }}
@@ -188,7 +186,7 @@ export default async function TeamDetailPage({
                       label={team.confederation}
                       size="small"
                       sx={{
-                        backgroundColor: "rgba(255,255,255,0.06)",
+                        backgroundColor: "rgba(0,0,0,0.05)",
                         color: "text.secondary",
                         fontSize: "0.7rem",
                       }}
@@ -215,11 +213,7 @@ export default async function TeamDetailPage({
 
         {simulation && (
           <Card
-            sx={{
-              background: "#111",
-              border: "1px solid rgba(255,255,255,0.07)",
-              mb: 3,
-            }}
+            sx={{ mb: 3 }}
           >
             <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
               <Typography
@@ -252,7 +246,7 @@ export default async function TeamDetailPage({
                       >
                         <Typography
                           variant="body2"
-                          color={isChamp ? FIFA.white : "text.secondary"}
+                          color={isChamp ? "text.primary" : "text.secondary"}
                           sx={{ fontWeight: isChamp ? 700 : 400 }}
                         >
                           {label}
@@ -260,7 +254,7 @@ export default async function TeamDetailPage({
                         <Typography
                           variant="body2"
                           sx={{
-                            color: isChamp ? FIFA.lime : FIFA.white,
+                            color: isChamp ? "#009933" : "text.primary",
                             fontWeight: 800,
                           }}
                         >
@@ -273,10 +267,9 @@ export default async function TeamDetailPage({
                         sx={{
                           height: isChamp ? 8 : 5,
                           borderRadius: 2,
-                          backgroundColor: "rgba(255,255,255,0.06)",
                           "& .MuiLinearProgress-bar": {
                             backgroundColor: isChamp
-                              ? FIFA.lime
+                              ? "#009933"
                               : FIFA.royalBlue,
                             borderRadius: 2,
                           },
@@ -292,11 +285,7 @@ export default async function TeamDetailPage({
 
         {fixtures.length > 0 && (
           <Card
-            sx={{
-              background: "#111",
-              border: "1px solid rgba(255,255,255,0.07)",
-              mb: 3,
-            }}
+            sx={{ mb: 3 }}
           >
             <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
               <Typography
@@ -336,8 +325,8 @@ export default async function TeamDetailPage({
                           textDecoration: "none",
                           p: 1.5,
                           borderRadius: 1,
-                          border: "1px solid rgba(255,255,255,0.06)",
-                          backgroundColor: "#0D0D0D",
+                          border: "1px solid rgba(0,0,0,0.07)",
+                          backgroundColor: "background.paper",
                           "&:hover": { borderColor: "rgba(230,0,0,0.3)" },
                           transition: "border-color 0.15s",
                         }}
@@ -381,13 +370,12 @@ export default async function TeamDetailPage({
 
         <Card
           sx={{
-            background: "#0A0A0A",
-            border: "1px dashed rgba(255,255,255,0.1)",
+            border: "1px dashed rgba(0,0,0,0.15)",
           }}
         >
           <CardContent sx={{ p: { xs: 2.5, md: 3 }, textAlign: "center" }}>
             <PeopleIcon
-              sx={{ fontSize: 40, color: "rgba(255,255,255,0.15)", mb: 1 }}
+              sx={{ fontSize: 40, color: "rgba(0,0,0,0.2)", mb: 1 }}
             />
             <Typography
               variant="body1"

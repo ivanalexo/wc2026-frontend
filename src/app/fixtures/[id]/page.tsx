@@ -64,7 +64,7 @@ function outcomeColor(pred: "H" | "D" | "A") {
     ? FIFA.red
     : pred === "A"
       ? FIFA.royalBlue
-      : "rgba(255,255,255,0.4)";
+      : "#5A5E7A";
 }
 
 export default async function FixtureDetailPage({
@@ -93,7 +93,7 @@ export default async function FixtureDetailPage({
             textDecoration: "none",
             mb: 3,
             fontSize: "0.85rem",
-            "&:hover": { color: FIFA.white },
+            "&:hover": { color: "text.primary" },
             transition: "color 0.2s",
           }}
         >
@@ -103,8 +103,6 @@ export default async function FixtureDetailPage({
 
         <Card
           sx={{
-            background: "linear-gradient(135deg, #141414 0%, #0F0F0F 100%)",
-            border: "1px solid rgba(255,255,255,0.08)",
             borderTop: `3px solid ${FIFA.red}`,
             mb: 3,
           }}
@@ -116,8 +114,8 @@ export default async function FixtureDetailPage({
                   label={`Grupo ${match.group}`}
                   size="small"
                   sx={{
-                    backgroundColor: "rgba(204,255,0,0.1)",
-                    color: FIFA.lime,
+                    backgroundColor: "rgba(51,51,204,0.1)",
+                    color: FIFA.royalBlue,
                     fontWeight: 700,
                     fontSize: "0.7rem",
                   }}
@@ -128,7 +126,7 @@ export default async function FixtureDetailPage({
                   label={match.stage}
                   size="small"
                   sx={{
-                    backgroundColor: "rgba(255,255,255,0.05)",
+                    backgroundColor: "rgba(0,0,0,0.05)",
                     color: "text.secondary",
                     fontSize: "0.7rem",
                   }}
@@ -150,7 +148,7 @@ export default async function FixtureDetailPage({
                     color:
                       match.prediction?.prediction === "H"
                         ? FIFA.red
-                        : FIFA.white,
+                        : "text.primary",
                     lineHeight: 1.2,
                     fontWeight: 900,
                   }}
@@ -191,7 +189,7 @@ export default async function FixtureDetailPage({
                     color:
                       match.prediction?.prediction === "A"
                         ? FIFA.royalBlue
-                        : FIFA.white,
+                        : "text.primary",
                     lineHeight: 1.2,
                     fontWeight: 900,
                   }}
@@ -242,8 +240,6 @@ export default async function FixtureDetailPage({
         {match.prediction && !hasScore && (
           <Card
             sx={{
-              background: "#111",
-              border: "1px solid rgba(255,255,255,0.07)",
               mb: 3,
             }}
           >
@@ -251,7 +247,7 @@ export default async function FixtureDetailPage({
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2.5 }}
               >
-                <TrendingUpIcon sx={{ color: FIFA.lime, fontSize: 20 }} />
+                <TrendingUpIcon sx={{ color: FIFA.royalBlue, fontSize: 20 }} />
                 <Typography
                   variant="subtitle2"
                   sx={{

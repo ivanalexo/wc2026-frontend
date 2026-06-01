@@ -36,8 +36,6 @@ export default function TeamCard({
   return (
     <Card
       sx={{
-        background: "#111",
-        border: "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.2s, border-color 0.2s, box-shadow 0.2s",
         "&:hover": {
           transform: "translateY(-3px)",
@@ -75,7 +73,7 @@ export default function TeamCard({
               style={{
                 objectFit: "cover",
                 borderRadius: 4,
-                border: "1px solid rgba(255,255,255,0.1)",
+                border: "1px solid rgba(0,0,0,0.1)",
               }}
             />
           ) : (
@@ -84,7 +82,7 @@ export default function TeamCard({
                 width: 80,
                 height: 54,
                 borderRadius: 1,
-                backgroundColor: "rgba(255,255,255,0.06)",
+                backgroundColor: "rgba(0,0,0,0.04)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -120,9 +118,9 @@ export default function TeamCard({
                 height: 20,
                 fontSize: "0.65rem",
                 fontWeight: 800,
-                backgroundColor: "rgba(204,255,0,0.1)",
-                color: FIFA.lime,
-                border: `1px solid ${FIFA.lime}33`,
+                backgroundColor: "rgba(51,51,204,0.1)",
+                color: FIFA.royalBlue,
+                border: `1px solid ${FIFA.royalBlue}44`,
                 letterSpacing: "0.06em",
               }}
             />
@@ -156,7 +154,7 @@ export default function TeamCard({
               sx={{
                 height: 3,
                 borderRadius: 2,
-                backgroundColor: "rgba(255,255,255,0.07)",
+                backgroundColor: "rgba(0,0,0,0.07)",
               }}
             >
               <Box
@@ -176,7 +174,7 @@ export default function TeamCard({
             sx={{
               mt: "auto",
               pt: 1.5,
-              borderTop: "1px solid rgba(255,255,255,0.06)",
+              borderTop: "1px solid rgba(0,0,0,0.08)",
               width: "100%",
             }}
           >

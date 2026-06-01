@@ -82,7 +82,7 @@ function outcomeLabel(prediction: "H" | "D" | "A", home: string, away: string) {
 function outcomeColor(prediction: "H" | "D" | "A") {
   if (prediction === "H") return FIFA.red;
   if (prediction === "A") return FIFA.royalBlue;
-  return "rgba(255,255,255,0.4)";
+  return "#5A5E7A";
 }
 
 interface PredictFormProps {
@@ -158,8 +158,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
     <Box>
       <Card
         sx={{
-          background: "#111",
-          border: "1px solid rgba(255,255,255,0.08)",
           borderTop: `3px solid ${FIFA.red}`,
           mb: 4,
         }}
@@ -205,8 +203,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                     disabled={homeTeam === awayTeam}
                     sx={{
                       "& .MuiOutlinedInput-root": {
-                        backgroundColor: "#0D0D0D",
-                        "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
+                        "& fieldset": { borderColor: "rgba(0,0,0,0.15)" },
                         "&:hover fieldset": { borderColor: FIFA.red },
                         "&.Mui-focused fieldset": { borderColor: FIFA.red },
                       },
@@ -227,8 +224,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
               <IconButton
                 onClick={handleSwap}
                 sx={{
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  backgroundColor: "#0D0D0D",
+                  border: "1px solid rgba(0,0,0,0.15)",
                   "&:hover": {
                     backgroundColor: "rgba(230,0,0,0.1)",
                     borderColor: FIFA.red,
@@ -270,8 +266,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                     disabled={homeTeam === awayTeam}
                     sx={{
                       "& .MuiOutlinedInput-root": {
-                        backgroundColor: "#0D0D0D",
-                        "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
+                        "& fieldset": { borderColor: "rgba(0,0,0,0.15)" },
                         "&:hover fieldset": { borderColor: FIFA.royalBlue },
                         "&.Mui-focused fieldset": {
                           borderColor: FIFA.royalBlue,
@@ -322,11 +317,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
         {matchResult && (
           <Box>
             <Card
-              sx={{
-                background: "#111",
-                border: "1px solid rgba(255,255,255,0.08)",
-                mb: 3,
-              }}
+              sx={{ mb: 3 }}
             >
               <CardContent sx={{ p: { xs: 2.5, md: 4 } }}>
                 <Box
@@ -413,9 +404,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                   height={10}
                 />
 
-                <Divider
-                  sx={{ borderColor: "rgba(255,255,255,0.07)", my: 3 }}
-                />
+                <Divider sx={{ my: 3 }} />
 
                 <Box sx={{ textAlign: "center" }}>
                   <Chip
@@ -460,11 +449,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
 
             {matchResult.explanation && (
               <Card
-                sx={{
-                  background: "#0F0F0F",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  mb: 3,
-                }}
+                sx={{ mb: 3 }}
               >
                 <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
                   <Box
@@ -475,7 +460,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                       mb: 2,
                     }}
                   >
-                    <TrendingUpIcon sx={{ color: FIFA.lime, fontSize: 20 }} />
+                    <TrendingUpIcon sx={{ color: FIFA.royalBlue, fontSize: 20 }} />
                     <Typography
                       variant="subtitle2"
                       sx={{
@@ -491,7 +476,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
 
                   <Typography
                     variant="body1"
-                    sx={{ color: FIFA.white, mb: 2, fontWeight: 600 }}
+                    sx={{ mb: 2, fontWeight: 600 }}
                   >
                     {matchResult.explanation.main_factor}
                   </Typography>
@@ -503,9 +488,9 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                         label={factor}
                         size="small"
                         sx={{
-                          backgroundColor: "rgba(204,255,0,0.08)",
-                          color: FIFA.lime,
-                          border: "1px solid rgba(204,255,0,0.2)",
+                          backgroundColor: "rgba(51,51,204,0.08)",
+                          color: FIFA.royalBlue,
+                          border: "1px solid rgba(51,51,204,0.2)",
                           fontWeight: 500,
                           fontSize: "0.72rem",
                         }}
@@ -518,10 +503,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
 
             {scoreResult && (
               <Card
-                sx={{
-                  background: "#0F0F0F",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                }}
+                sx={{}}
               >
                 <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
                   <Typography
@@ -542,7 +524,6 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                       variant="h2"
                       sx={{
                         letterSpacing: "0.1em",
-                        color: FIFA.white,
                         fontWeight: 900,
                       }}
                     >
@@ -571,8 +552,8 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                         sx={{
                           backgroundColor:
                             score === scoreResult.predicted_score
-                              ? "rgba(230,0,0,0.15)"
-                              : "rgba(255,255,255,0.05)",
+                              ? "rgba(230,0,0,0.12)"
+                              : "rgba(0,0,0,0.04)",
                           color:
                             score === scoreResult.predicted_score
                               ? FIFA.red
@@ -580,7 +561,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                           border:
                             score === scoreResult.predicted_score
                               ? `1px solid ${FIFA.red}55`
-                              : "1px solid rgba(255,255,255,0.08)",
+                              : "1px solid rgba(0,0,0,0.1)",
                           fontWeight:
                             score === scoreResult.predicted_score ? 700 : 400,
                           fontFamily: "monospace",

@@ -41,11 +41,7 @@ export default function Navbar() {
       <AppBar
         position="sticky"
         elevation={0}
-        sx={{
-          backdropFilter: "blur(12px)",
-          backgroundColor: "rgba(43, 37, 37, 0.92)",
-          borderBottom: `1px solid rgba(255,255,255,0.07)`,
-        }}
+        sx={{ backdropFilter: "blur(12px)" }}
       >
         <Toolbar sx={{ px: { xs: 2, md: 4 }, height: 64 }}>
           <NextLink
@@ -128,8 +124,8 @@ export default function Navbar() {
           paper: {
             sx: {
               width: 260,
-              backgroundColor: "#0D0D0D",
-              borderLeft: `1px solid rgba(255,255,255,0.08)`,
+              backgroundColor: "background.paper",
+              borderLeft: `1px solid rgba(0,0,0,0.08)`,
             },
           },
         }}
@@ -149,13 +145,13 @@ export default function Navbar() {
           <IconButton
             onClick={() => setDrawerOpen(false)}
             size="small"
-            sx={{ color: "rgba(255,255,255,0.5)" }}
+            sx={{ color: "text.secondary" }}
           >
             <CloseIcon fontSize="small" />
           </IconButton>
         </Box>
 
-        <Divider sx={{ borderColor: "rgba(255,255,255,0.07)" }} />
+        <Divider />
 
         <List sx={{ pt: 1 }}>
           {NAV_LINKS.map(({ label, href }) => (
@@ -168,13 +164,13 @@ export default function Navbar() {
                   px: 2.5,
                   py: 1.5,
                   borderLeft: isActive(href)
-                    ? `3px solid ${FIFA.lime}`
+                    ? `3px solid ${FIFA.red}`
                     : "3px solid transparent",
                   backgroundColor: isActive(href)
-                    ? "rgba(204,255,0,0.06)"
+                    ? "rgba(230,0,0,0.06)"
                     : "transparent",
                   "&:hover": {
-                    backgroundColor: "rgba(255,255,255,0.05)",
+                    backgroundColor: "rgba(0,0,0,0.04)",
                   },
                 }}
               >
@@ -185,8 +181,8 @@ export default function Navbar() {
                       sx={{
                         fontWeight: isActive(href) ? 700 : 400,
                         color: isActive(href)
-                          ? FIFA.white
-                          : "rgba(255,255,255,0.6)",
+                          ? "text.primary"
+                          : "text.secondary",
                         fontSize: "0.9rem",
                         letterSpacing: "0.06em",
                         textTransform: "uppercase",
