@@ -52,7 +52,7 @@ export default function ProbabilityBar({
           <Box
             sx={{
               width: pct(pDraw),
-              backgroundColor: "rgba(255,255,255,0.25)",
+              backgroundColor: "rgba(0,0,0,0.15)",
               transition: "width 0.4s ease",
               minWidth: pDraw > 0 ? 4 : 0,
             }}

@@ -9,8 +9,8 @@ export default function Footer() {
       component="footer"
       sx={{
         mt: "auto",
-        borderTop: `1px solid rgba(255,255,255,0.07)`,
-        backgroundColor: "rgba(43, 37, 37, 0.92)",
+        borderTop: "1px solid rgba(0,0,0,0.08)",
+        backgroundColor: "background.paper",
       }}
     >
       <Box

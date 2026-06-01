@@ -118,7 +118,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
   }, [rows]);
 
   const cellSx = {
-    borderBottom: "1px solid rgba(255,255,255,0.05)",
+    borderBottom: "1px solid rgba(0,0,0,0.06)",
     py: 1.5,
     px: 2,
     fontSize: "0.82rem",
@@ -126,8 +126,6 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
 
   const headSx = {
     ...cellSx,
-    backgroundColor: "#0A0A0A",
-    color: "rgba(255,255,255,0.5)",
     fontWeight: 700,
     fontSize: "0.72rem",
     letterSpacing: "0.08em",
@@ -163,9 +161,8 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
           sx={{
             width: 220,
             "& .MuiOutlinedInput-root": {
-              backgroundColor: "#0D0D0D",
-              "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
-              "&:hover fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+              "& fieldset": { borderColor: "rgba(0,0,0,0.15)" },
+              "&:hover fieldset": { borderColor: "rgba(0,0,0,0.3)" },
               "&.Mui-focused fieldset": { borderColor: FIFA.red },
             },
           }}
@@ -191,15 +188,15 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                 letterSpacing: "0.06em",
                 borderRadius: 1,
                 border: "1px solid",
-                borderColor: active ? FIFA.lime : "rgba(255,255,255,0.1)",
-                color: active ? FIFA.lime : "rgba(255,255,255,0.4)",
+                borderColor: active ? FIFA.red : "rgba(0,0,0,0.18)",
+                color: active ? FIFA.red : "text.secondary",
                 backgroundColor: active
-                  ? "rgba(204,255,0,0.08)"
+                  ? "rgba(230,0,0,0.06)"
                   : "transparent",
                 "&:hover": {
-                  borderColor: FIFA.lime,
-                  color: FIFA.lime,
-                  backgroundColor: "rgba(204,255,0,0.06)",
+                  borderColor: FIFA.red,
+                  color: FIFA.red,
+                  backgroundColor: "rgba(230,0,0,0.05)",
                 },
                 transition: "all 0.15s",
               }}
@@ -213,7 +210,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
       {processed.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 8 }}>
           <QueryStatsIcon
-            sx={{ fontSize: 48, color: "rgba(255,255,255,0.1)", mb: 1 }}
+            sx={{ fontSize: 48, color: "rgba(0,0,0,0.12)", mb: 1 }}
           />
           <Typography variant="body1" color="text.secondary">
             No hay resultados para &quot;{search}&quot;
@@ -223,7 +220,6 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
         <TableContainer
           sx={{
             borderRadius: 2,
-            border: "1px solid rgba(255,255,255,0.07)",
             overflowX: "auto",
           }}
         >
@@ -260,7 +256,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                     sx={{
                       color: "inherit !important",
                       "& .MuiTableSortLabel-icon": {
-                        color: `${FIFA.lime} !important`,
+                        color: `${FIFA.royalBlue} !important`,
                       },
                     }}
                   >
@@ -276,7 +272,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                       ...headSx,
                       minWidth: col.minWidth,
                       color: col.highlight
-                        ? `${FIFA.lime} !important`
+                        ? `#009933 !important`
                         : undefined,
                       cursor: "pointer",
                     }}
@@ -288,7 +284,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                       sx={{
                         color: "inherit !important",
                         "& .MuiTableSortLabel-icon": {
-                          color: `${FIFA.lime} !important`,
+                          color: `${FIFA.royalBlue} !important`,
                         },
                       }}
                     >
@@ -311,7 +307,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                     sx={{
                       cursor: "pointer",
                       backgroundColor:
-                        rank <= 2 ? "rgba(204,255,0,0.02)" : "transparent",
+                        rank <= 2 ? "rgba(0,153,51,0.04)" : "transparent",
                       "&:hover": { backgroundColor: "rgba(230,0,0,0.05)" },
                       transition: "background-color 0.15s",
                     }}
@@ -321,7 +317,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                         ...cellSx,
                         textAlign: "center",
                         fontWeight: 800,
-                        color: rank <= 3 ? FIFA.lime : "rgba(255,255,255,0.3)",
+                        color: rank <= 3 ? "#009933" : "rgba(0,0,0,0.25)",
                         fontSize: "0.85rem",
                       }}
                     >
@@ -341,7 +337,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                             style={{
                               objectFit: "cover",
                               borderRadius: 2,
-                              border: "1px solid rgba(255,255,255,0.1)",
+                              border: "1px solid rgba(0,0,0,0.1)",
                               flexShrink: 0,
                             }}
                           />
@@ -351,7 +347,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                               width: 32,
                               height: 22,
                               borderRadius: 0.5,
-                              backgroundColor: "rgba(255,255,255,0.06)",
+                              backgroundColor: "rgba(0,0,0,0.04)",
                               flexShrink: 0,
                             }}
                           />
@@ -371,9 +367,9 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                             height: 18,
                             fontSize: "0.62rem",
                             fontWeight: 800,
-                            backgroundColor: "rgba(204,255,0,0.08)",
-                            color: FIFA.lime,
-                            border: `1px solid ${FIFA.lime}33`,
+                            backgroundColor: "rgba(51,51,204,0.1)",
+                            color: FIFA.royalBlue,
+                            border: `1px solid ${FIFA.royalBlue}44`,
                           }}
                         />
                       ) : (
@@ -405,11 +401,11 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                             fontWeight: col.highlight ? 800 : 500,
                             color: col.highlight
                               ? val > 0.1
-                                ? FIFA.lime
-                                : "rgba(204,255,0,0.5)"
+                                ? "#009933"
+                                : "rgba(0,153,51,0.5)"
                               : val > 0.5
-                                ? FIFA.white
-                                : "rgba(255,255,255,0.45)",
+                                ? "text.primary"
+                                : "text.secondary",
                           }}
                         >
                           {pct(val)}

@@ -62,9 +62,9 @@ export default async function Home() {
           alignItems: "center",
           overflow: "hidden",
           background: `
-            radial-gradient(ellipse 80% 60% at 50% 0%, ${FIFA.navy}55 0%, transparent 70%),
-            radial-gradient(ellipse 40% 60% at 80% 100%, ${FIFA.burgundy}44 0%, transparent 60%),
-            #080808
+            radial-gradient(ellipse 80% 60% at 50% 0%, ${FIFA.navy}25 0%, transparent 70%),
+            radial-gradient(ellipse 40% 60% at 80% 100%, ${FIFA.burgundy}18 0%, transparent 60%),
+            #EEF0F8
           `,
         }}
       >
@@ -74,7 +74,7 @@ export default async function Home() {
             position: "absolute", inset: 0, pointerEvents: "none",
             backgroundImage: `repeating-linear-gradient(
               -45deg, transparent, transparent 40px,
-              rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+              rgba(0,0,0,0.02) 40px, rgba(0,0,0,0.02) 41px
             )`,
           }}
         />
@@ -84,14 +84,14 @@ export default async function Home() {
 
             <Typography
               variant="overline"
-              sx={{ color: FIFA.lime, letterSpacing: "0.25em", fontWeight: 700, fontSize: "0.7rem", display: "block", mb: 2 }}
+              sx={{ color: FIFA.royalBlue, letterSpacing: "0.25em", fontWeight: 700, fontSize: "0.7rem", display: "block", mb: 2 }}
             >
               USA · CANADA · MÉXICO · JUNIO 2026
             </Typography>
 
             <Typography
               variant="h1"
-              sx={{ fontSize: { xs: "2.8rem", sm: "3.8rem", md: "5rem" }, fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", mb: 1, color: FIFA.white }}
+              sx={{ fontSize: { xs: "2.8rem", sm: "3.8rem", md: "5rem" }, fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", mb: 1 }}
             >
               PREDICCIÓN MUNDIAL
             </Typography>
@@ -122,8 +122,8 @@ export default async function Home() {
               </LinkButton>
               <LinkButton
                 href="/fixtures"
-                variant="outlined" size="large"
-                sx={{ borderColor: "rgba(255,255,255,0.2)", color: FIFA.white, fontWeight: 600, px: 3, "&:hover": { borderColor: FIFA.white, backgroundColor: "rgba(255,255,255,0.05)" } }}
+                variant="outlined" color="secondary" size="large"
+                sx={{ fontWeight: 600, px: 3 }}
               >
                 Ver partidos
               </LinkButton>
@@ -133,7 +133,7 @@ export default async function Home() {
       </Box>
 
       {favorites.length > 0 && (
-        <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: "#0A0A0A" }}>
+        <Box sx={{ py: { xs: 6, md: 8 }, bgcolor: "background.default" }}>
           <Container maxWidth="lg">
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 10 }}>
@@ -154,8 +154,7 @@ export default async function Home() {
                   <Grid size={{ xs: 12, sm: 6, md: 3 }}  key={team.team}>
                     <Card
                       sx={{
-                        height: "100%", background: "#111",
-                        border: "1px solid rgba(255,255,255,0.06)",
+                        height: "100%",
                         borderTop: `3px solid ${accent}`,
                         transition: "transform 0.2s, box-shadow 0.2s",
                         "&:hover": { transform: "translateY(-3px)", boxShadow: `0 8px 24px ${accent}22` },
@@ -171,7 +170,7 @@ export default async function Home() {
                           </Typography>
                         </Box>
 
-                        <Typography variant="h4" sx={{ color: FIFA.white, mb: 0.5, fontWeight: 900 }}>
+                        <Typography variant="h4" sx={{ mb: 0.5, fontWeight: 900 }}>
                           {champPct}%
                         </Typography>
                         <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 2 }}>
@@ -181,10 +180,10 @@ export default async function Home() {
                         <LinearProgress
                           variant="determinate"
                           value={(team.p_champion ?? 0) * 100}
-                          sx={{ mb: 2, backgroundColor: "rgba(255,255,255,0.08)", "& .MuiLinearProgress-bar": { backgroundColor: accent } }}
+                          sx={{ mb: 2, "& .MuiLinearProgress-bar": { backgroundColor: accent } }}
                         />
 
-                        <Divider sx={{ borderColor: "rgba(255,255,255,0.06)", mb: 2 }} />
+                        <Divider sx={{ mb: 2 }} />
 
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                           <Box>
@@ -238,13 +237,13 @@ export default async function Home() {
       <Box
         sx={{
           py: { xs: 6, md: 8 },
-          background: `linear-gradient(135deg, ${FIFA.navy}88 0%, ${FIFA.burgundy}44 100%)`,
-          borderTop: "1px solid rgba(255,255,255,0.07)",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          background: `linear-gradient(135deg, ${FIFA.navy}18 0%, ${FIFA.burgundy}10 100%)`,
+          borderTop: "1px solid rgba(0,0,0,0.08)",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
         <Container maxWidth="md" sx={{ textAlign: "center" }}>
-          <AutoGraphIcon sx={{ fontSize: 48, color: FIFA.lime, mb: 2 }} />
+          <AutoGraphIcon sx={{ fontSize: 48, color: FIFA.royalBlue, mb: 2 }} />
           <Typography variant="h3" sx={{ fontWeight: 900, mb: 1.5 }} component='h3'>
             ¿Quién gana el próximo partido?
           </Typography>

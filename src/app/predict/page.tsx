@@ -33,8 +33,8 @@ export default async function PredictPage() {
         minHeight: "calc(100vh - 64px)",
         background: `
           radial-gradient(ellipse 60% 50% at 50% 0%,
-            ${FIFA.navy}44 0%, transparent 65%
-          ), #080808
+            ${FIFA.navy}20 0%, transparent 65%
+          ), #EEF0F8
         `,
         py: { xs: 4, md: 8 },
       }}
@@ -43,7 +43,7 @@ export default async function PredictPage() {
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
             variant="overline"
-            sx={{ color: FIFA.lime, letterSpacing: "0.25em", fontWeight: 700, fontSize: "0.7rem" }}
+            sx={{ color: FIFA.royalBlue, letterSpacing: "0.25em", fontWeight: 700, fontSize: "0.7rem" }}
           >
             Machine Learning · XGBoost
           </Typography>

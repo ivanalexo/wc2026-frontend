@@ -29,8 +29,6 @@ export default function MatchCard({ match }: MatchCardProps) {
   return (
     <Card
       sx={{
-        background: "linear-gradient(135deg, #141414 0%, #0F0F0F 100%)",
-        border: "1px solid rgba(255,255,255,0.07)",
         transition: "border-color 0.2s, transform 0.2s",
         "&:hover": {
           borderColor: `rgba(230,0,0,0.4)`,
@@ -56,8 +54,8 @@ export default function MatchCard({ match }: MatchCardProps) {
               label={`Grupo ${match.group}`}
               size="small"
               sx={{
-                backgroundColor: "rgba(204,255,0,0.1)",
-                color: FIFA.lime,
+                backgroundColor: "rgba(51,51,204,0.1)",
+                color: FIFA.royalBlue,
                 fontWeight: 700,
                 fontSize: "0.65rem",
                 letterSpacing: "0.08em",
@@ -123,7 +121,7 @@ export default function MatchCard({ match }: MatchCardProps) {
             {hasScore ? (
               <Typography
                 variant="h6"
-                sx={{ color: FIFA.white, lineHeight: 1, fontWeight: 900 }}
+                sx={{ lineHeight: 1, fontWeight: 900 }}
               >
                 {match.home_score} — {match.away_score}
               </Typography>

@@ -70,19 +70,19 @@ function GroupStandings({ standings }: { standings: TeamStanding[] }) {
                 p: 1.5,
                 borderRadius: 1,
                 backgroundColor: qualifies
-                  ? "rgba(204,255,0,0.04)"
-                  : "rgba(255,255,255,0.02)",
+                  ? "rgba(0,153,51,0.05)"
+                  : "rgba(0,0,0,0.02)",
                 border: "1px solid",
                 borderColor: qualifies
-                  ? "rgba(204,255,0,0.12)"
-                  : "rgba(255,255,255,0.05)",
+                  ? "rgba(0,153,51,0.15)"
+                  : "rgba(0,0,0,0.06)",
               }}
             >
               <Typography
                 variant="h6"
                 sx={{
                   fontWeight: 900,
-                  color: qualifies ? FIFA.lime : "rgba(255,255,255,0.25)",
+                  color: qualifies ? "#009933" : "rgba(0,0,0,0.2)",
                   textAlign: "center",
                   lineHeight: 1,
                 }}
@@ -111,9 +111,9 @@ function GroupStandings({ standings }: { standings: TeamStanding[] }) {
                         fontSize: "0.55rem",
                         fontWeight: 800,
                         letterSpacing: "0.08em",
-                        backgroundColor: "rgba(204,255,0,0.15)",
-                        color: FIFA.lime,
-                        border: `1px solid ${FIFA.lime}44`,
+                        backgroundColor: "rgba(0,153,51,0.12)",
+                        color: "#009933",
+                        border: "1px solid rgba(0,153,51,0.3)",
                       }}
                     />
                   )}
@@ -125,7 +125,7 @@ function GroupStandings({ standings }: { standings: TeamStanding[] }) {
                         height: 16,
                         fontSize: "0.55rem",
                         fontWeight: 700,
-                        backgroundColor: "rgba(255,255,255,0.05)",
+                        backgroundColor: "rgba(0,0,0,0.05)",
                         color: "text.secondary",
                       }}
                     />
@@ -135,7 +135,7 @@ function GroupStandings({ standings }: { standings: TeamStanding[] }) {
                   sx={{
                     height: 4,
                     borderRadius: 2,
-                    backgroundColor: "rgba(255,255,255,0.07)",
+                    backgroundColor: "rgba(0,0,0,0.08)",
                     overflow: "hidden",
                   }}
                 >
@@ -145,8 +145,8 @@ function GroupStandings({ standings }: { standings: TeamStanding[] }) {
                       height: "100%",
                       borderRadius: 2,
                       backgroundColor: qualifies
-                        ? FIFA.lime
-                        : "rgba(255,255,255,0.2)",
+                        ? "#009933"
+                        : "rgba(0,0,0,0.15)",
                       transition: "width 0.6s ease",
                     }}
                   />
@@ -158,7 +158,7 @@ function GroupStandings({ standings }: { standings: TeamStanding[] }) {
                   variant="body2"
                   sx={{
                     fontWeight: 800,
-                    color: qualifies ? FIFA.lime : "text.secondary",
+                    color: qualifies ? "#009933" : "text.secondary",
                   }}
                 >
                   {s.expectedPoints.toFixed(1)}
@@ -201,8 +201,8 @@ function GroupMatchRow({ match }: { match: GroupMatch }) {
         textDecoration: "none",
         p: 1.5,
         borderRadius: 1,
-        border: "1px solid rgba(255,255,255,0.06)",
-        backgroundColor: "#0D0D0D",
+        border: "1px solid rgba(0,0,0,0.07)",
+        backgroundColor: "background.paper",
         "&:hover": {
           borderColor: "rgba(230,0,0,0.3)",
           backgroundColor: "rgba(230,0,0,0.03)",
@@ -272,15 +272,11 @@ export default function GroupsClient({ groups }: GroupsClientProps) {
         scrollButtons="auto"
         sx={{
           mb: 4,
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          "& .MuiTabs-indicator": { backgroundColor: FIFA.lime, height: 2 },
           "& .MuiTab-root": {
-            color: "rgba(255,255,255,0.4)",
             fontWeight: 700,
             fontSize: "0.82rem",
             letterSpacing: "0.06em",
             minWidth: 80,
-            "&.Mui-selected": { color: FIFA.lime },
           },
         }}
       >
@@ -293,9 +289,7 @@ export default function GroupsClient({ groups }: GroupsClientProps) {
         <Grid size={{ xs: 12, md: 5 }}>
           <Card
             sx={{
-              background: "#111",
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderTop: `3px solid ${FIFA.lime}`,
+              borderTop: `3px solid ${FIFA.royalBlue}`,
               height: "100%",
             }}
           >
