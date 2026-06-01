@@ -13,6 +13,7 @@ pnpm dev
 # or
 bun dev
 ```
+don't forget to setup your `NEXT_PUBLIC_API_URL`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
