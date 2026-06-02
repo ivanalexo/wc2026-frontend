@@ -90,7 +90,7 @@ export default async function SimulatePage() {
           sx={{ mb: 4, opacity: 0.7 }}
         >
           Resultados de 10,000 simulaciones Monte Carlo · Haz clic en las
-          columnas para ordenar · Haz clic en un equipo para ver su perfil
+          columnas para ordenar
         </Typography>
 
         <SimulationClient rows={rows} />

@@ -51,7 +51,7 @@ export default function MatchScorePredictor({
           variant="subtitle2"
           sx={{ textTransform: "uppercase", letterSpacing: "0.08em", fontSize: "0.75rem", mb: 2, fontWeight: 700 }}
         >
-          Predicción de marcador · Poisson + Monte Carlo
+          Predicción de marcador
         </Typography>
 
         {!result && (

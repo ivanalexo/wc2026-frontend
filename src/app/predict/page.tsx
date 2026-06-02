@@ -42,12 +42,6 @@ export default async function PredictPage() {
       <Container maxWidth="md">
         <Box sx={{ textAlign: "center", mb: 6 }}>
           <Typography
-            variant="overline"
-            sx={{ color: FIFA.royalBlue, letterSpacing: "0.25em", fontWeight: 700, fontSize: "0.7rem" }}
-          >
-            Machine Learning · XGBoost
-          </Typography>
-          <Typography
             variant="h3"
             sx={{ mt: 1, letterSpacing: "-0.02em", fontWeight: 900 }}
           >

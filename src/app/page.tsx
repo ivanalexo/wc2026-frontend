@@ -108,7 +108,7 @@ export default async function Home() {
             </Typography>
 
             <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400, mb: 4, maxWidth: 480, lineHeight: 1.6 }}>
-              Predicciones con Machine Learning.
+              Predicciones con Machine Learning
             </Typography>
 
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>

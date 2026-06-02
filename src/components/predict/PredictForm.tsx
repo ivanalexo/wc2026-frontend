@@ -516,7 +516,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                       mb: 2,
                     }}
                   >
-                    Marcador probable · Poisson + Monte Carlo
+                    Marcador probable
                   </Typography>
 
                   <Box sx={{ textAlign: "center", mb: 3 }}>

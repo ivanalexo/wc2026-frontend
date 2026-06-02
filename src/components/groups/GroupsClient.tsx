@@ -319,7 +319,7 @@ export default function GroupsClient({ groups }: GroupsClientProps) {
               mb: 1.5,
             }}
           >
-            Partidos del grupo · haz clic para el detalle
+            Partidos del grupo
           </Typography>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
