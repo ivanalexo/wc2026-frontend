@@ -99,7 +99,7 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
         {selectedGroup
           ? `Grupo ${selectedGroup} — ${filtered.length} partidos`
-          : `Mostrando ${filtered.length} partidos`}
+          : `Mostrando ${filtered.length} partidos`} - Haz clic en un partido para ver detalles y predicciones
       </Typography>
 
       {filtered.length === 0 ? (

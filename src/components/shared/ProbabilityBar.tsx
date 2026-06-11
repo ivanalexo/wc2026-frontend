@@ -13,6 +13,7 @@ interface ProbabilityBarProps {
   awayLabel: string;
   height?: number;
   showLabels?: boolean;
+  drawHintThreshold?: number;
 }
 
 export default function ProbabilityBar({
@@ -23,12 +24,14 @@ export default function ProbabilityBar({
   awayLabel,
   height = 8,
   showLabels = true,
+  drawHintThreshold = 0.05,
 }: ProbabilityBarProps) {
   const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
+  const showDrawHint =
+    Math.abs(pHome - pAway) <= drawHintThreshold && pDraw > 0.25;
 
   return (
     <Box>
-      {/* Barra tripartita */}
       <Box
         sx={{
           display: "flex",
@@ -98,6 +101,21 @@ export default function ProbabilityBar({
             {pct(pAway)}
           </Typography>
         </Box>
+      )}
+
+      {showDrawHint && (
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            textAlign: "center",
+            mt: 1,
+            color: "text.secondary",
+            fontStyle: "italic",
+          }}
+        >
+          Partido muy igualado — el empate es un resultado probable
+        </Typography>
       )}
     </Box>
   );
