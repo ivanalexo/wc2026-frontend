@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { FIFA } from "@/theme/theme";
 import { ScorePredictionResponse } from "@/lib/types";
 import api, { endpoints } from "@/lib/api";
@@ -117,6 +118,26 @@ export default function MatchScorePredictor({
               λ {homeTeam}: {result.expected_home_goals} · λ {awayTeam}: {result.expected_away_goals} ·{" "}
               {result.n_simulations.toLocaleString()} simulaciones
             </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                mt: 2.5,
+                p: 1.5,
+                borderRadius: 1,
+                backgroundColor: "rgba(0,0,0,0.03)",
+                border: "1px solid rgba(0,0,0,0.06)",
+              }}
+            >
+              <InfoOutlinedIcon sx={{ fontSize: 14, color: "text.disabled", flexShrink: 0, mt: "1px" }} />
+              <Typography variant="caption" color="text.disabled" sx={{ lineHeight: 1.5 }}>
+                El marcador es referencial. El modelo está optimizado para predecir al ganador, no un resultado exacto.
+                El fútbol tiene un alto componente aleatorio y el marcador esperado depende de variables como el estado
+                físico y anímico de los jugadores, su rendimiento con la selección, los goles esperados y las decisiones
+                del cuerpo técnico.
+              </Typography>
+            </Box>
           </Box>
         )}
       </CardContent>
