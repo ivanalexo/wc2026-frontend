@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import ThemeRegistry from "@/components/ThemeRegistry";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className} style={{ margin: 0 }}>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
         <ThemeRegistry>
           {/* Flex column para que el footer quede al fondo */}
           <Box
