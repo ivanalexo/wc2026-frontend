@@ -38,7 +38,8 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const match = await getFixture(params.id);
+  const { id } = await params;
+  const match = await getFixture(id);
   if (!match) return { title: "Partido no encontrado" };
   return {
     title: `${match.home_team} vs ${match.away_team}`,
