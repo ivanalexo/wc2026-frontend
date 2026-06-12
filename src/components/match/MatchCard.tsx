@@ -19,8 +19,8 @@ interface MatchCardProps {
 export default function MatchCard({ match }: MatchCardProps) {
   const finished = match.status === "finished";
   const hasScore = match.home_score !== null && match.away_score !== null;
-  const correct = finished ? isPredictionCorrect(match) : null;
-  const winner = finished ? winnerName(match) : null;
+  const correct  = finished ? isPredictionCorrect(match) : null;
+  const winner   = finished ? winnerName(match) : null;
 
   return (
     <Card
@@ -156,41 +156,29 @@ export default function MatchCard({ match }: MatchCardProps) {
           </Typography>
         )}
 
-        {finished && match.prediction && winner !== null && (
+        {finished && match.prediction && hasScore && winner !== null && (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 0.5,
               mt: 0.5,
-              py: 0.75,
+              pt: 0.75,
               borderTop: "1px solid rgba(0,0,0,0.06)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 0.4,
             }}
           >
+            {/* Línea 1 — acierto del ganador */}
             {correct ? (
-              <>
-                <Typography
-                  variant="caption"
-                  sx={{ color: FIFA.green, fontWeight: 700, fontSize: "0.72rem" }}
-                >
-                  ✓ Modelo acertó ·
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{ color: FIFA.green, fontWeight: 800, fontSize: "0.72rem" }}
-                >
-                  {winner}
-                </Typography>
-              </>
+              <Typography variant="caption" sx={{ color: "success.main", fontWeight: 700, fontSize: "0.7rem" }}>
+                ✓ Modelo acertó · {winner}
+              </Typography>
             ) : (
-              <Typography
-                variant="caption"
-                sx={{ color: "text.secondary", fontWeight: 600, fontSize: "0.7rem", opacity: 0.6 }}
-              >
+              <Typography variant="caption" sx={{ color: "text.secondary", fontWeight: 600, fontSize: "0.7rem", opacity: 0.65 }}>
                 Modelo no acertó · ganó {winner}
               </Typography>
             )}
+
           </Box>
         )}
 

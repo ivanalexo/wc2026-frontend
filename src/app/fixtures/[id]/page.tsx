@@ -339,12 +339,13 @@ export default async function FixtureDetailPage({
           </Card>
         )}
 
-        {!finished && (
-          <MatchScorePredictor
-            homeTeam={match.home_team}
-            awayTeam={match.away_team}
-          />
-        )}
+        <MatchScorePredictor
+          homeTeam={match.home_team}
+          awayTeam={match.away_team}
+          realHomeScore={match.home_score}
+          realAwayScore={match.away_score}
+          autoLoad={finished}
+        />
       </Container>
     </Box>
   );
