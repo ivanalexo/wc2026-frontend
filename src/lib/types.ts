@@ -17,6 +17,8 @@ export interface PredictionSummary {
   prediction_label: string;
 }
 
+export type MatchStatus = "scheduled" | "live" | "finished";
+
 export interface Match {
   id: number;
   home_team: string;
@@ -26,6 +28,7 @@ export interface Match {
   country: string | null;
   stage: string | null;
   group: string | null;
+  status: MatchStatus;
   home_score: number | null;
   away_score: number | null;
   prediction: PredictionSummary | null;

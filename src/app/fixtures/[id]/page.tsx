@@ -18,6 +18,8 @@ import MatchScorePredictor from "@/components/fixtures/Matchscorepredictor";
 import LinkButton from "@/components/shared/LinkButton";
 import Image from "next/image";
 import { getFlagUrl } from "@/lib/flagCodes";
+import { MatchDateTimeFull } from "@/components/shared/MatchDateTime";
+import { isPredictionCorrect, winnerName } from "@/lib/predictionResult";
 
 async function getFixture(id: string): Promise<Match | null> {
   try {
@@ -47,19 +49,6 @@ export async function generateMetadata({
   };
 }
 
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr);
-  return {
-    full: d.toLocaleDateString("es", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }),
-    time: d.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" }),
-  };
-}
-
 function outcomeColor(pred: "H" | "D" | "A") {
   return pred === "H"
     ? FIFA.red
@@ -77,8 +66,10 @@ export default async function FixtureDetailPage({
   const match = await getFixture(id);
   if (!match) notFound();
 
-  const { full, time } = formatDate(match.date);
+  const finished = match.status === "finished";
   const hasScore = match.home_score !== null && match.away_score !== null;
+  const correct = finished ? isPredictionCorrect(match) : null;
+  const winner = finished ? winnerName(match) : null;
 
   return (
     <Box sx={{ py: { xs: 4, md: 6 } }}>
@@ -129,6 +120,18 @@ export default async function FixtureDetailPage({
                   sx={{
                     backgroundColor: "rgba(0,0,0,0.05)",
                     color: "text.secondary",
+                    fontSize: "0.7rem",
+                  }}
+                />
+              )}
+              {finished && (
+                <Chip
+                  label="Finalizado"
+                  size="small"
+                  sx={{
+                    backgroundColor: "rgba(0,0,0,0.06)",
+                    color: "text.secondary",
+                    fontWeight: 700,
                     fontSize: "0.7rem",
                   }}
                 />
@@ -220,7 +223,7 @@ export default async function FixtureDetailPage({
                   color="text.secondary"
                   sx={{ textTransform: "capitalize" }}
                 >
-                  {full} · {time}
+                  <MatchDateTimeFull dateStr={match.date} />
                 </Typography>
               </Box>
               {match.city && (
@@ -238,16 +241,10 @@ export default async function FixtureDetailPage({
           </CardContent>
         </Card>
 
-        {match.prediction && !hasScore && (
-          <Card
-            sx={{
-              mb: 3,
-            }}
-          >
+        {match.prediction && (
+          <Card sx={{ mb: 3 }}>
             <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2.5 }}
-              >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2.5 }}>
                 <TrendingUpIcon sx={{ color: FIFA.royalBlue, fontSize: 20 }} />
                 <Typography
                   variant="subtitle2"
@@ -282,11 +279,67 @@ export default async function FixtureDetailPage({
                 awayLabel={match.away_team}
                 height={10}
               />
+
+              {finished && winner !== null && (
+                <Box
+                  sx={{
+                    mt: 2,
+                    pt: 2,
+                    borderTop: "1px solid rgba(0,0,0,0.07)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  {correct ? (
+                    <>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "success.main", fontWeight: 700 }}
+                      >
+                        ✓ El modelo acertó el resultado
+                      </Typography>
+                      <Chip
+                        label={winner}
+                        size="small"
+                        sx={{
+                          ml: "auto",
+                          backgroundColor: "rgba(0,153,51,0.12)",
+                          color: "success.main",
+                          border: "1px solid rgba(0,153,51,0.3)",
+                          fontWeight: 800,
+                          fontSize: "0.75rem",
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "text.secondary", fontWeight: 600 }}
+                      >
+                        El modelo no acertó · ganó
+                      </Typography>
+                      <Chip
+                        label={winner}
+                        size="small"
+                        sx={{
+                          ml: "auto",
+                          backgroundColor: "rgba(0,0,0,0.05)",
+                          color: "text.secondary",
+                          fontWeight: 700,
+                          fontSize: "0.75rem",
+                        }}
+                      />
+                    </>
+                  )}
+                </Box>
+              )}
             </CardContent>
           </Card>
         )}
 
-        {!hasScore && (
+        {!finished && (
           <MatchScorePredictor
             homeTeam={match.home_team}
             awayTeam={match.away_team}
