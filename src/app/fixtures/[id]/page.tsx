@@ -19,7 +19,7 @@ import LinkButton from "@/components/shared/LinkButton";
 import Image from "next/image";
 import { getFlagUrl } from "@/lib/flagCodes";
 import { MatchDateTimeFull } from "@/components/shared/MatchDateTime";
-import { isPredictionCorrect, winnerName, realOutcome } from "@/lib/predictionResult";
+import { isPredictionCorrect, winnerName } from "@/lib/predictionResult";
 
 async function getFixture(id: string): Promise<Match | null> {
   try {
@@ -70,13 +70,10 @@ export default async function FixtureDetailPage({
   const hasScore = match.home_score !== null && match.away_score !== null;
   const correct = finished ? isPredictionCorrect(match) : null;
   const winner = finished ? winnerName(match) : null;
-  const outcome = finished ? realOutcome(match) : null;
-
-  const drawHinted = match.prediction
+  const drawHinted = finished && match.prediction
     ? Math.abs(match.prediction.p_home_win - match.prediction.p_away_win) <= 0.05
       && match.prediction.p_draw > 0.25
     : false;
-  const drawHintCorrect = finished && drawHinted && outcome === "D";
 
   return (
     <Box sx={{ py: { xs: 4, md: 6 } }}>
@@ -343,7 +340,7 @@ export default async function FixtureDetailPage({
                     )}
                   </Box>
 
-                  {drawHintCorrect && (
+                  {drawHinted && (
                     <Typography
                       variant="caption"
                       sx={{ color: "warning.main", fontStyle: "italic" }}
