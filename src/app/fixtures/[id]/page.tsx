@@ -19,7 +19,7 @@ import LinkButton from "@/components/shared/LinkButton";
 import Image from "next/image";
 import { getFlagUrl } from "@/lib/flagCodes";
 import { MatchDateTimeFull } from "@/components/shared/MatchDateTime";
-import { isPredictionCorrect, winnerName } from "@/lib/predictionResult";
+import { isPredictionCorrect, winnerName, realOutcome } from "@/lib/predictionResult";
 
 async function getFixture(id: string): Promise<Match | null> {
   try {
@@ -70,6 +70,13 @@ export default async function FixtureDetailPage({
   const hasScore = match.home_score !== null && match.away_score !== null;
   const correct = finished ? isPredictionCorrect(match) : null;
   const winner = finished ? winnerName(match) : null;
+  const outcome = finished ? realOutcome(match) : null;
+
+  const drawHinted = match.prediction
+    ? Math.abs(match.prediction.p_home_win - match.prediction.p_away_win) <= 0.05
+      && match.prediction.p_draw > 0.25
+    : false;
+  const drawHintCorrect = finished && drawHinted && outcome === "D";
 
   return (
     <Box sx={{ py: { xs: 4, md: 6 } }}>
@@ -287,51 +294,62 @@ export default async function FixtureDetailPage({
                     pt: 2,
                     borderTop: "1px solid rgba(0,0,0,0.07)",
                     display: "flex",
-                    alignItems: "center",
+                    flexDirection: "column",
                     gap: 1,
                   }}
                 >
-                  {correct ? (
-                    <>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "success.main", fontWeight: 700 }}
-                      >
-                        ✓ El modelo acertó el resultado
-                      </Typography>
-                      <Chip
-                        label={winner}
-                        size="small"
-                        sx={{
-                          ml: "auto",
-                          backgroundColor: "rgba(0,153,51,0.12)",
-                          color: "success.main",
-                          border: "1px solid rgba(0,153,51,0.3)",
-                          fontWeight: 800,
-                          fontSize: "0.75rem",
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "text.secondary", fontWeight: 600 }}
-                      >
-                        El modelo no acertó · ganó
-                      </Typography>
-                      <Chip
-                        label={winner}
-                        size="small"
-                        sx={{
-                          ml: "auto",
-                          backgroundColor: "rgba(0,0,0,0.05)",
-                          color: "text.secondary",
-                          fontWeight: 700,
-                          fontSize: "0.75rem",
-                        }}
-                      />
-                    </>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    {correct ? (
+                      <>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: "success.main", fontWeight: 700 }}
+                        >
+                          ✓ El modelo acertó el resultado
+                        </Typography>
+                        <Chip
+                          label={winner}
+                          size="small"
+                          sx={{
+                            ml: "auto",
+                            backgroundColor: "rgba(0,153,51,0.12)",
+                            color: "success.main",
+                            border: "1px solid rgba(0,153,51,0.3)",
+                            fontWeight: 800,
+                            fontSize: "0.75rem",
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: "text.secondary", fontWeight: 600 }}
+                        >
+                          El modelo no acertó · ganó
+                        </Typography>
+                        <Chip
+                          label={winner}
+                          size="small"
+                          sx={{
+                            ml: "auto",
+                            backgroundColor: "rgba(0,0,0,0.05)",
+                            color: "text.secondary",
+                            fontWeight: 700,
+                            fontSize: "0.75rem",
+                          }}
+                        />
+                      </>
+                    )}
+                  </Box>
+
+                  {drawHintCorrect && (
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "warning.main", fontStyle: "italic" }}
+                    >
+                      El modelo advirtió: partido muy igualado, empate probable
+                    </Typography>
                   )}
                 </Box>
               )}
