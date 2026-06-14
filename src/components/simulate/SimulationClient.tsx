@@ -387,7 +387,7 @@ export default function SimulationClient({ rows }: SimulationClientProps) {
                         color: FIFA.skyBlue,
                       }}
                     >
-                      {row.elo ? row.elo.toLocaleString() : "—"}
+                      {row.elo ? Math.round(row.elo).toLocaleString("en-US") : "—"}
                     </TableCell>
 
                     {COLUMNS.map((col) => {

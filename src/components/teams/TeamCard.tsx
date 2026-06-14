@@ -147,7 +147,7 @@ export default function TeamCard({
                 variant="caption"
                 sx={{ fontSize: "0.7rem", fontWeight: 700 }}
               >
-                {elo.toLocaleString()}
+                {Math.round(elo).toLocaleString("en-US")}
               </Typography>
             </Box>
             <Box

@@ -345,7 +345,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                     </Typography>
                     {matchResult.home_elo && (
                       <Typography variant="caption" color="text.secondary">
-                        ELO {matchResult.home_elo.toLocaleString()}
+                        ELO {Math.round(matchResult.home_elo).toLocaleString("en-US")}
                       </Typography>
                     )}
                   </Box>
@@ -389,7 +389,7 @@ export default function PredictForm({ initialTeams }: PredictFormProps) {
                     </Typography>
                     {matchResult.away_elo && (
                       <Typography variant="caption" color="text.secondary">
-                        ELO {matchResult.away_elo.toLocaleString()}
+                        ELO {Math.round(matchResult.away_elo).toLocaleString("en-US")}
                       </Typography>
                     )}
                   </Box>
