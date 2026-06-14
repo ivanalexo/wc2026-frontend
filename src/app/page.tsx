@@ -18,7 +18,7 @@ async function getTopFavorites(): Promise<TeamSimulation[]> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/simulate/tournament?top=8`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 300 } }
     );
     if (!res.ok) return [];
     const data = await res.json();

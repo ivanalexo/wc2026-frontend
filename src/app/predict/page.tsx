@@ -14,7 +14,7 @@ async function getTeamNames(): Promise<string[]> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/teams?limit=100`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 300 } }
     );
     if (!res.ok) return [];
     const teams: { name: string }[] = await res.json();

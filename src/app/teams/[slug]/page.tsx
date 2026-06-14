@@ -37,7 +37,7 @@ async function getTeamSimulation(
     const encoded = encodeURIComponent(teamName);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/simulate/tournament/${encoded}`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 300 } },
     );
     if (!res.ok) return null;
     const data = await res.json();
