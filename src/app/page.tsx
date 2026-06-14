@@ -31,7 +31,7 @@ async function getTopFavorites(): Promise<TeamSimulation[]> {
 async function getFeaturedFixtures(): Promise<Match[]> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/fixtures?limit=6`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/fixtures?upcoming=true&limit=6`,
       { next: { revalidate: 300 } }
     );
     if (!res.ok) return [];
