@@ -10,9 +10,10 @@ import LinearProgress from "@mui/material/LinearProgress";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PeopleIcon from "@mui/icons-material/People";
 import { FIFA } from "@/theme/theme";
-import { Team, TeamSimulation, Match } from "@/lib/types";
+import { Team, TeamSimulation, Match, Player } from "@/lib/types";
 import { getFlagUrl } from "@/lib/flagCodes";
 import ProbabilityBar from "@/components/shared/ProbabilityBar";
+import Squad from "@/components/teams/Squad";
 import LinkButton from "@/components/shared/LinkButton";
 import Image from "next/image";
 
@@ -47,6 +48,20 @@ async function getTeamSimulation(
   }
 }
 
+async function getSquad(teamName: string): Promise<Player[]> {
+  try {
+    const encoded = encodeURIComponent(teamName);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/players/${encoded}`,
+      { next: { revalidate: 3600 } },
+    );
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
+
 async function getTeamFixtures(teamName: string): Promise<Match[]> {
   try {
     const res = await fetch(
@@ -68,7 +83,8 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const team = await getTeam(params.slug);
+  const { slug } = await params;
+  const team = await getTeam(slug);
   if (!team) return { title: "Equipo no encontrado" };
   return {
     title: team.name,
@@ -94,9 +110,10 @@ export default async function TeamDetailPage({
   const team = await getTeam(slug);
   if (!team) notFound();
 
-  const [simulation, fixtures] = await Promise.all([
+  const [simulation, fixtures, squad] = await Promise.all([
     getTeamSimulation(team.name),
     getTeamFixtures(team.name),
+    getSquad(team.name),
   ]);
 
   const flagUrl = getFlagUrl(team.name, 160);
@@ -368,31 +385,35 @@ export default async function TeamDetailPage({
           </Card>
         )}
 
-        <Card
-          sx={{
-            border: "1px dashed rgba(0,0,0,0.15)",
-          }}
-        >
-          <CardContent sx={{ p: { xs: 2.5, md: 3 }, textAlign: "center" }}>
-            <PeopleIcon
-              sx={{ fontSize: 40, color: "rgba(0,0,0,0.2)", mb: 1 }}
-            />
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: 600 }}
-              color="text.secondary"
-            >
-              Plantilla convocada
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ mt: 0.5, opacity: 0.5 }}
-            >
-              Próximamente...
-            </Typography>
-          </CardContent>
-        </Card>
+        {squad.length > 0 ? (
+          <Squad players={squad} />
+        ) : (
+          <Card
+            sx={{
+              border: "1px dashed rgba(0,0,0,0.15)",
+            }}
+          >
+            <CardContent sx={{ p: { xs: 2.5, md: 3 }, textAlign: "center" }}>
+              <PeopleIcon
+                sx={{ fontSize: 40, color: "rgba(0,0,0,0.2)", mb: 1 }}
+              />
+              <Typography
+                variant="body1"
+                sx={{ fontWeight: 600 }}
+                color="text.secondary"
+              >
+                Plantilla convocada
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ mt: 0.5, opacity: 0.5 }}
+              >
+                Próximamente...
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
       </Container>
     </Box>
   );

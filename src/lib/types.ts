@@ -9,6 +9,18 @@ export interface Team {
   flag_url: string | null;
 }
 
+export interface Player {
+  id: number;
+  team_name: string;
+  name: string;
+  position: string | null;
+  number: number | null;
+  age: number | null;
+  nacionality: string | null;
+  club: string | null;
+  photo_url: string | null;
+}
+
 export interface PredictionSummary {
   p_home_win: number;
   p_draw: number;
