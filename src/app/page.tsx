@@ -193,7 +193,7 @@ export default async function Home() {
                           </Box>
                           <Box sx={{ textAlign: "right" }}>
                             <Typography variant="caption" color="text.secondary">ELO</Typography>
-                            <Typography variant="body2" sx={{ fontWeight: 700 }}>{team.elo ?? "—"}</Typography>
+                            <Typography variant="body2" sx={{ fontWeight: 700 }}>{Math.round(team.elo).toLocaleString('en-US') ?? "—"}</Typography>
                           </Box>
                         </Box>
                       </CardContent>
