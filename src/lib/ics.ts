@@ -7,6 +7,7 @@ const MATCH_DURATION_MS = 2 * 60 * 60 * 1000;
  * Emoji de bandera a partir del código de flagCodes.
  * - Código ISO-2 ("mx")        -> regional indicators (🇲🇽)
  * - Subdivisión ("gb-eng")     -> tag sequence (🏴󠁧󠁢󠁥󠁮󠁧󠁿)
+ * Devuelve "" si el equipo no tiene bandera mapeada.
  */
 export function teamFlagEmoji(teamName: string): string {
   const code = getFlagCode(teamName);
@@ -26,10 +27,6 @@ export function teamFlagEmoji(teamName: string): string {
     .join("");
 }
 
-/**
- * Equipo con más probabilidad de ganar (ignora el empate).
- * null si el partido no tiene predicción.
- */
 export function matchFavorite(
   match: Match
 ): { team: string; pct: number } | null {
@@ -42,12 +39,10 @@ export function matchFavorite(
   };
 }
 
-/** Las fechas del backend son UTC aunque no traigan sufijo "Z". */
 function toDate(dateStr: string): Date {
   return new Date(dateStr.endsWith("Z") ? dateStr : dateStr + "Z");
 }
 
-/** Formato ICS en UTC: YYYYMMDDTHHMMSSZ */
 function toICSStamp(d: Date): string {
   const p = (n: number) => String(n).padStart(2, "0");
   return (
@@ -56,7 +51,6 @@ function toICSStamp(d: Date): string {
   );
 }
 
-/** Escapa caracteres especiales en valores TEXT de iCalendar (RFC 5545). */
 function esc(text: string): string {
   return text
     .replace(/\\/g, "\\\\")
@@ -65,10 +59,6 @@ function esc(text: string): string {
     .replace(/\r?\n/g, "\\n");
 }
 
-/**
- * Plegado de líneas a 74 code points (RFC 5545 recomienda <=75 octetos).
- * Iteramos por code points para no partir pares surrogados (emojis).
- */
 function foldLine(line: string): string {
   const chars = [...line];
   if (chars.length <= 75) return line;
@@ -90,9 +80,13 @@ function buildEvent(match: Match, origin: string, dtstamp: string): string[] {
 
   const fav = matchFavorite(match);
   const descLines: string[] = [];
-  if (fav) descLines.push(`Favorito: ${fav.team} (${fav.pct}%)`);
-  descLines.push(`Detalle del partido: ${origin}/fixtures/${match.id}`);
-  descLines.push(`Simulador del torneo: ${origin}/simulate`);
+  if (fav) descLines.push(`Favorito a ganar: ${fav.team} (${fav.pct}%)`);
+  descLines.push('');
+  descLines.push('Si quieres saber más detalles de este partido, visita el enlace:');
+  descLines.push(`${origin}/fixtures/${match.id}`);
+  descLines.push('');
+  descLines.push('Si quieres probar otros encuentros, visita el simulador:');
+  descLines.push(`${origin}/simulate`);
 
   const location = [match.city, match.country].filter(Boolean).join(", ");
 

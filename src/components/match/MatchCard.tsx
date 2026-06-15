@@ -26,6 +26,7 @@ export default function MatchCard({ match }: MatchCardProps) {
     <Card
       sx={{
         transition: "border-color 0.2s, transform 0.2s",
+        maxHeight: "100%",
         "&:hover": {
           borderColor: `rgba(230,0,0,0.4)`,
           transform: "translateY(-2px)",
