@@ -13,6 +13,7 @@ import { FIFA } from "@/theme/theme";
 import { Match, TeamSimulation } from "@/lib/types";
 import MatchCard from "@/components/match/MatchCard";
 import LinkButton from "@/components/shared/LinkButton"
+import DownloadCalendarButton from "@/components/home/DownloadCalendarButton";
 
 async function getTopFavorites(): Promise<TeamSimulation[]> {
   try {
@@ -261,6 +262,8 @@ export default async function Home() {
           </LinkButton>
         </Container>
       </Box>
+
+      <DownloadCalendarButton />
 
     </Box>
   );
