@@ -24,12 +24,24 @@ const PHASES: { key: PhaseKey; label: string; stages: string[] | null }[] = [
   { key: "final",  label: "Final",   stages: ["Final", "3rd Place"] },
 ];
 
+function currentPhase(fixtures: Match[]): PhaseKey {
+  for (const p of PHASES) {
+    if (!p.stages) continue; // saltar "Todos"
+    const inPhase = fixtures.filter((m) => m.stage && p.stages!.includes(m.stage));
+    if (inPhase.length > 0 && !inPhase.every((m) => m.status === "finished")) {
+      return p.key;
+    }
+  }
+  return "final";
+}
+
 interface FixturesClientProps {
   fixtures: Match[];
 }
 
 export default function FixturesClient({ fixtures }: FixturesClientProps) {
-  const [phase, setPhase] = useState<PhaseKey>("all");
+  // Por defecto el pill activo es la ronda en curso (no "Todos").
+  const [phase, setPhase] = useState<PhaseKey>(() => currentPhase(fixtures));
   const [group, setGroup] = useState<string | null>(null);
 
   const phaseDef = PHASES.find((p) => p.key === phase)!;
