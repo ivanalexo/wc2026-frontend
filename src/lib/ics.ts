@@ -107,7 +107,8 @@ function buildEvent(match: Match, origin: string, dtstamp: string): string[] {
   return lines;
 }
 
-export function buildGroupStageIcs(matches: Match[], origin: string): string {
+/** Construye el .ics solo con los partidos que ya tienen ambos equipos confirmados. */
+export function buildIcs(matches: Match[], origin: string, calName: string): string {
   const dtstamp = toICSStamp(new Date());
 
   const lines = [
@@ -116,9 +117,9 @@ export function buildGroupStageIcs(matches: Match[], origin: string): string {
     "PRODID:-//WC2026//Fixtures//ES",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "X-WR-CALNAME:Mundial FIFA 2026 Fase de Grupos",
+    `X-WR-CALNAME:${esc(calName)}`,
     ...matches
-      .filter((m) => m.group)
+      .filter((m) => m.home_team && m.away_team)  // solo cruces ya confirmados
       .flatMap((m) => buildEvent(m, origin, dtstamp)),
     "END:VCALENDAR",
   ];
@@ -126,14 +127,17 @@ export function buildGroupStageIcs(matches: Match[], origin: string): string {
   return lines.map(foldLine).join("\r\n");
 }
 
-export function downloadCalendar(matches: Match[]): void {
-  const ics = buildGroupStageIcs(matches, window.location.origin);
+export function downloadCalendar(
+  matches: Match[],
+  opts: { calName: string; fileName: string },
+): void {
+  const ics = buildIcs(matches, window.location.origin, opts.calName);
   const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = "mundial-2026-fase-de-grupos.ics";
+  a.download = opts.fileName;
   document.body.appendChild(a);
   a.click();
   a.remove();

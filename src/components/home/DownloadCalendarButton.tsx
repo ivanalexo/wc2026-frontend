@@ -8,6 +8,14 @@ import api, { endpoints } from "@/lib/api";
 import { Match } from "@/lib/types";
 import { downloadCalendar } from "@/lib/ics";
 
+// Ronda vigente del calendario descargable (actualizar al avanzar el torneo).
+const ROUND = {
+  stage: "Round of 16",
+  buttonLabel: "Calendario 8vos de final",
+  calName: "Mundial FIFA 2026 · Octavos de final",
+  fileName: "mundial-2026-octavos.ics",
+};
+
 export default function DownloadCalendarButton() {
   const [loading, setLoading] = useState(false);
 
@@ -16,9 +24,12 @@ export default function DownloadCalendarButton() {
     setLoading(true);
     try {
       const { data } = await api.get<Match[]>(endpoints.fixtures, {
-        params: { limit: 72 },
+        params: { stage: ROUND.stage, limit: 16 },
       });
-      downloadCalendar(data);
+      // Solo descargamos si ya hay cruces confirmados en esta ronda.
+      if (data.some((m) => m.home_team && m.away_team)) {
+        downloadCalendar(data, { calName: ROUND.calName, fileName: ROUND.fileName });
+      }
     } catch {
     } finally {
       setLoading(false);
@@ -46,7 +57,7 @@ export default function DownloadCalendarButton() {
       ) : (
         <CalendarMonthIcon sx={{ mr: 1 }} />
       )}
-      Descargar calendario
+      {ROUND.buttonLabel}
     </Fab>
   );
 }
