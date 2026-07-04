@@ -12,15 +12,41 @@ import MatchCard from "@/components/match/MatchCard";
 
 const GROUPS = ["A","B","C","D","E","F","G","H","I","J","K","L"] as const;
 
+type PhaseKey = "all" | "groups" | "r32" | "r16" | "qf" | "sf" | "final";
+
+const PHASES: { key: PhaseKey; label: string; stages: string[] | null }[] = [
+  { key: "all",    label: "Todos",   stages: null },
+  { key: "groups", label: "Grupos",  stages: ["Group Stage"] },
+  { key: "r32",    label: "32avos",  stages: ["Round of 32"] },
+  { key: "r16",    label: "Octavos", stages: ["Round of 16"] },
+  { key: "qf",     label: "Cuartos", stages: ["Quarter-finals"] },
+  { key: "sf",     label: "Semis",   stages: ["Semi-finals"] },
+  { key: "final",  label: "Final",   stages: ["Final", "3rd Place"] },
+];
+
 interface FixturesClientProps {
   fixtures: Match[];
 }
 
 export default function FixturesClient({ fixtures }: FixturesClientProps) {
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [phase, setPhase] = useState<PhaseKey>("all");
+  const [group, setGroup] = useState<string | null>(null);
 
-  // Conteo por grupo para los badges
-  const matchCounts = useMemo(() => {
+  const phaseDef = PHASES.find((p) => p.key === phase)!;
+
+  const phaseCounts = useMemo(() => {
+    const counts: Record<PhaseKey, number> = {
+      all: fixtures.length, groups: 0, r32: 0, r16: 0, qf: 0, sf: 0, final: 0,
+    };
+    for (const m of fixtures) {
+      for (const p of PHASES) {
+        if (p.stages && m.stage && p.stages.includes(m.stage)) counts[p.key]++;
+      }
+    }
+    return counts;
+  }, [fixtures]);
+
+  const groupCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const m of fixtures) {
       if (m.group) counts[m.group] = (counts[m.group] ?? 0) + 1;
@@ -28,15 +54,23 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
     return counts;
   }, [fixtures]);
 
-  const filtered = useMemo(
-    () =>
-      selectedGroup
-        ? fixtures.filter((m) => m.group === selectedGroup)
-        : fixtures,
-    [fixtures, selectedGroup]
-  );
+  const filtered = useMemo(() => {
+    let list = fixtures;
+    if (phaseDef.stages) {
+      list = list.filter((m) => m.stage && phaseDef.stages!.includes(m.stage));
+    }
+    if (phase === "groups" && group) {
+      list = list.filter((m) => m.group === group);
+    }
+    return list;
+  }, [fixtures, phase, group, phaseDef]);
 
-  const btnSx = (active: boolean) => ({
+  const selectPhase = (key: PhaseKey) => {
+    setPhase(key);
+    if (key !== "groups") setGroup(null);
+  };
+
+  const pillSx = (active: boolean) => ({
     minWidth: 44,
     height: 34,
     fontWeight: 700,
@@ -55,6 +89,8 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
     transition: "all 0.15s",
   });
 
+  const countSx = { ml: 0.5, fontSize: "0.6rem", opacity: 0.6, fontWeight: 400 };
+
   return (
     <Box>
       <Box
@@ -63,53 +99,55 @@ export default function FixturesClient({ fixtures }: FixturesClientProps) {
           gap: 0.75,
           flexWrap: "wrap",
           alignItems: "center",
-          mb: 4,
-          pb: 3,
-          borderBottom: "1px solid rgba(0,0,0,0.08)",
+          mb: phase === "groups" ? 2 : 4,
+          pb: phase === "groups" ? 0 : 3,
+          borderBottom: phase === "groups" ? "none" : "1px solid rgba(0,0,0,0.08)",
         }}
       >
-        <Button
-          onClick={() => setSelectedGroup(null)}
-          sx={btnSx(selectedGroup === null)}
-        >
-          Todos
-          <Box component="span" sx={{ ml: 0.5, fontSize: "0.6rem", opacity: 0.6, fontWeight: 400 }}>
-            ({fixtures.length})
-          </Box>
-        </Button>
-
-        <Box sx={{ width: 1, height: 22, backgroundColor: "rgba(0,0,0,0.12)", mx: 0.25 }} />
-
-        {GROUPS.map((g) => (
-          <Button
-            key={g}
-            onClick={() => setSelectedGroup(g)}
-            sx={btnSx(selectedGroup === g)}
-          >
-            {g}
-            {matchCounts[g] !== undefined && (
-              <Box component="span" sx={{ ml: 0.5, fontSize: "0.6rem", opacity: 0.6, fontWeight: 400 }}>
-                ({matchCounts[g]})
-              </Box>
-            )}
+        {PHASES.map((p) => (
+          <Button key={p.key} onClick={() => selectPhase(p.key)} sx={pillSx(phase === p.key)}>
+            {p.label}
+            <Box component="span" sx={countSx}>({phaseCounts[p.key]})</Box>
           </Button>
         ))}
       </Box>
 
+      {phase === "groups" && (
+        <Box
+          sx={{
+            display: "flex",
+            gap: 0.75,
+            flexWrap: "wrap",
+            alignItems: "center",
+            mb: 4,
+            pb: 3,
+            borderBottom: "1px solid rgba(0,0,0,0.08)",
+          }}
+        >
+          <Button onClick={() => setGroup(null)} sx={pillSx(group === null)}>
+            Todos
+          </Button>
+          <Box sx={{ width: 1, height: 22, backgroundColor: "rgba(0,0,0,0.12)", mx: 0.25 }} />
+          {GROUPS.map((g) => (
+            <Button key={g} onClick={() => setGroup(g)} sx={pillSx(group === g)}>
+              {g}
+              {groupCounts[g] !== undefined && (
+                <Box component="span" sx={countSx}>({groupCounts[g]})</Box>
+              )}
+            </Button>
+          ))}
+        </Box>
+      )}
+
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        {selectedGroup
-          ? `Grupo ${selectedGroup} — ${filtered.length} partidos`
-          : `Mostrando ${filtered.length} partidos`} - Haz clic en un partido para ver detalles y predicciones
+        Mostrando {filtered.length} partidos — Haz clic en un partido (con equipos definidos) para ver detalles y predicciones
       </Typography>
 
       {filtered.length === 0 ? (
         <Box sx={{ textAlign: "center", py: 10 }}>
           <SportsSoccerIcon sx={{ fontSize: 56, color: "rgba(0,0,0,0.12)", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400 }}>
-            No hay partidos para el Grupo {selectedGroup}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, opacity: 0.5 }}>
-            Verifica que el seeder asignó grupos correctamente
+            No hay partidos para este filtro
           </Typography>
         </Box>
       ) : (

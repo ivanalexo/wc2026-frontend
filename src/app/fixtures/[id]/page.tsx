@@ -18,6 +18,7 @@ import MatchScorePredictor from "@/components/fixtures/Matchscorepredictor";
 import LinkButton from "@/components/shared/LinkButton";
 import Image from "next/image";
 import { getFlagUrl } from "@/lib/flagCodes";
+import { teamDisplay } from "@/lib/slotLabel";
 import { MatchDateTimeFull } from "@/components/shared/MatchDateTime";
 import { isPredictionCorrect, winnerName } from "@/lib/predictionResult";
 
@@ -43,9 +44,11 @@ export async function generateMetadata({
   const { id } = await params;
   const match = await getFixture(id);
   if (!match) return { title: "Partido no encontrado" };
+  const home = teamDisplay(match.home_team, match.home_slot);
+  const away = teamDisplay(match.away_team, match.away_slot);
   return {
-    title: `${match.home_team} vs ${match.away_team}`,
-    description: `Predicción para el partido ${match.home_team} vs ${match.away_team} del Mundial 2026`,
+    title: `${home} vs ${away}`,
+    description: `Predicción para el partido ${home} vs ${away} del Mundial 2026`,
   };
 }
 
@@ -68,6 +71,9 @@ export default async function FixtureDetailPage({
 
   const finished = match.status === "finished";
   const hasScore = match.home_score !== null && match.away_score !== null;
+  const resolved = match.home_team !== null && match.away_team !== null;
+  const homeName = teamDisplay(match.home_team, match.home_slot);
+  const awayName = teamDisplay(match.away_team, match.away_slot);
   const correct = finished ? isPredictionCorrect(match) : null;
   const winner = finished ? winnerName(match) : null;
   const drawHinted = finished && match.prediction
@@ -144,12 +150,16 @@ export default async function FixtureDetailPage({
 
             <Grid container spacing={2} sx={{ mb: 3, alignItems: "center" }}>
               <Grid size={{ xs: 5 }} sx={{ textAlign: "center" }}>
-                <Image
-                  src={getFlagUrl(match.home_team, 80) as string}
-                  alt={match.home_team}
-                  width={50}
-                  height={25}
-                />
+                {match.home_team ? (
+                  <Image
+                    src={getFlagUrl(match.home_team, 80) as string}
+                    alt={match.home_team}
+                    width={50}
+                    height={25}
+                  />
+                ) : (
+                  <Box sx={{ width: 50, height: 25, mx: "auto", borderRadius: 0.5, backgroundColor: "rgba(0,0,0,0.06)", border: "1px dashed rgba(0,0,0,0.2)" }} />
+                )}
                 <Typography
                   variant="h4"
                   sx={{
@@ -159,9 +169,10 @@ export default async function FixtureDetailPage({
                         : "text.primary",
                     lineHeight: 1.2,
                     fontWeight: 900,
+                    fontStyle: match.home_team ? "normal" : "italic",
                   }}
                 >
-                  {match.home_team}
+                  {homeName}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
                   Local
@@ -185,12 +196,16 @@ export default async function FixtureDetailPage({
               </Grid>
 
               <Grid size={{ xs: 5 }} sx={{ textAlign: "center" }}>
-                <Image
-                  src={getFlagUrl(match.away_team, 80) as string}
-                  alt={match.away_team}
-                  width={50}
-                  height={25}
-                />
+                {match.away_team ? (
+                  <Image
+                    src={getFlagUrl(match.away_team, 80) as string}
+                    alt={match.away_team}
+                    width={50}
+                    height={25}
+                  />
+                ) : (
+                  <Box sx={{ width: 50, height: 25, mx: "auto", borderRadius: 0.5, backgroundColor: "rgba(0,0,0,0.06)", border: "1px dashed rgba(0,0,0,0.2)" }} />
+                )}
                 <Typography
                   variant="h4"
                   sx={{
@@ -200,9 +215,10 @@ export default async function FixtureDetailPage({
                         : "text.primary",
                     lineHeight: 1.2,
                     fontWeight: 900,
+                    fontStyle: match.away_team ? "normal" : "italic",
                   }}
                 >
-                  {match.away_team}
+                  {awayName}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
                   Visitante
@@ -279,8 +295,8 @@ export default async function FixtureDetailPage({
                 pHome={match.prediction.p_home_win}
                 pDraw={match.prediction.p_draw}
                 pAway={match.prediction.p_away_win}
-                homeLabel={match.home_team}
-                awayLabel={match.away_team}
+                homeLabel={homeName}
+                awayLabel={awayName}
                 height={10}
               />
 
@@ -354,13 +370,15 @@ export default async function FixtureDetailPage({
           </Card>
         )}
 
-        <MatchScorePredictor
-          homeTeam={match.home_team}
-          awayTeam={match.away_team}
-          realHomeScore={match.home_score}
-          realAwayScore={match.away_score}
-          autoLoad={finished}
-        />
+        {resolved && (
+          <MatchScorePredictor
+            homeTeam={match.home_team as string}
+            awayTeam={match.away_team as string}
+            realHomeScore={match.home_score}
+            realAwayScore={match.away_score}
+            autoLoad={finished}
+          />
+        )}
       </Container>
     </Box>
   );

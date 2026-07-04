@@ -218,7 +218,7 @@ export default async function Home() {
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 4 }}>
               <SportsSoccerIcon sx={{ color: FIFA.red, fontSize: 28 }} />
-              <Typography variant="h4" sx={{ fontWeight: 800 }}>Partidos del grupo</Typography>
+              <Typography variant="h4" sx={{ fontWeight: 800 }}>Próximos partidos</Typography>
               <LinkButton href="/fixtures" variant="text" size="small" sx={{ ml: "auto", color: "text.secondary", fontSize: "0.8rem" }}>
                 Ver todos
               </LinkButton>

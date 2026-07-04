@@ -33,8 +33,11 @@ export type MatchStatus = "scheduled" | "live" | "finished";
 
 export interface Match {
   id: number;
-  home_team: string;
-  away_team: string;
+  match_number: number | null;
+  home_team: string | null;
+  away_team: string | null;
+  home_slot: string | null;
+  away_slot: string | null;
   date: string;
   city: string | null;
   country: string | null;
@@ -43,6 +46,7 @@ export interface Match {
   status: MatchStatus;
   home_score: number | null;
   away_score: number | null;
+  winner: "HOME" | "AWAY" | null;
   prediction: PredictionSummary | null;
 }
 

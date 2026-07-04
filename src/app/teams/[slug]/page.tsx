@@ -12,6 +12,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import { FIFA } from "@/theme/theme";
 import { Team, TeamSimulation, Match, Player } from "@/lib/types";
 import { getFlagUrl } from "@/lib/flagCodes";
+import { teamDisplay } from "@/lib/slotLabel";
 import ProbabilityBar from "@/components/shared/ProbabilityBar";
 import Squad from "@/components/teams/Squad";
 import LinkButton from "@/components/shared/LinkButton";
@@ -326,7 +327,9 @@ export default async function TeamDetailPage({
                   )
                   .map((match) => {
                     const isHome = match.home_team === team.name;
-                    const rival = isHome ? match.away_team : match.home_team;
+                    const rival = isHome
+                      ? teamDisplay(match.away_team, match.away_slot)
+                      : teamDisplay(match.home_team, match.home_slot);
                     const dateStr = new Date(match.date).toLocaleDateString(
                       "es",
                       { day: "2-digit", month: "short" },
@@ -371,8 +374,8 @@ export default async function TeamDetailPage({
                             pHome={match.prediction.p_home_win}
                             pDraw={match.prediction.p_draw}
                             pAway={match.prediction.p_away_win}
-                            homeLabel={match.home_team}
-                            awayLabel={match.away_team}
+                            homeLabel={teamDisplay(match.home_team, match.home_slot)}
+                            awayLabel={teamDisplay(match.away_team, match.away_slot)}
                             height={5}
                             showLabels={false}
                           />

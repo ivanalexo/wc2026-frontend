@@ -23,6 +23,7 @@ import fifaLogo from "../../../public/images/fifa-logo.png";
 
 const NAV_LINKS = [
   { label: "Partidos", href: "/fixtures" },
+  { label: "Llave", href: "/bracket" },
   { label: "Grupos", href: "/groups" },
   { label: "Equipos", href: "/teams" },
   { label: "Predictor", href: "/predict" },

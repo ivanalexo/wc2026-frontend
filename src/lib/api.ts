@@ -15,6 +15,7 @@ export const endpoints = {
   squad: (slug: string) => `/api/v1/teams/${slug}/squad`,
   fixtures: "/api/v1/fixtures",
   fixture: (id: number) => `/api/v1/fixtures/${id}`,
+  bracket: "/api/v1/bracket",
   groups: "/api/v1/groups",
   predictMatch: "/api/v1/predict/match",
   predictScore: "/api/v1/predict/score",

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 async function getAllFixtures(): Promise<Match[]> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/fixtures?limit=72`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/fixtures?limit=104`,
       { cache: "no-store" }
     );
     if (!res.ok) return [];
@@ -38,7 +38,7 @@ export default async function FixturesPage() {
             Calendario del Mundial
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-            {fixtures.length} partidos · Fase de grupos
+            {fixtures.length} partidos · Grupos y eliminatorias
           </Typography>
         </Box>
 

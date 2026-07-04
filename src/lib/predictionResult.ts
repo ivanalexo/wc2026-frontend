@@ -24,17 +24,17 @@ export function winnerName(match: Match): string | null {
   if (outcome === null) return null;
   if (outcome === "H") return match.home_team;
   if (outcome === "A") return match.away_team;
+  if (match.winner === "HOME") return match.home_team;
+  if (match.winner === "AWAY") return match.away_team;
   return "Empate";
 }
 
-/** Probabilidad que el modelo asignó a un outcome concreto */
 export function outcomeProb(pred: PredictionSummary, outcome: "H" | "D" | "A"): number {
   if (outcome === "H") return pred.p_home_win;
   if (outcome === "A") return pred.p_away_win;
   return pred.p_draw;
 }
 
-/** Etiqueta legible de un outcome H/D/A */
 export function outcomeLabel(outcome: "H" | "D" | "A"): string {
   return OUTCOME_LABEL[outcome];
 }

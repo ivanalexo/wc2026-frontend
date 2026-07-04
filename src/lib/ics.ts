@@ -1,5 +1,6 @@
 import { Match } from "@/lib/types";
 import { getFlagCode } from "@/lib/flagCodes";
+import { teamDisplay } from "@/lib/slotLabel";
 
 const MATCH_DURATION_MS = 2 * 60 * 60 * 1000;
 
@@ -9,7 +10,8 @@ const MATCH_DURATION_MS = 2 * 60 * 60 * 1000;
  * - Subdivisión ("gb-eng")     -> tag sequence (🏴󠁧󠁢󠁥󠁮󠁧󠁿)
  * Devuelve "" si el equipo no tiene bandera mapeada.
  */
-export function teamFlagEmoji(teamName: string): string {
+export function teamFlagEmoji(teamName: string | null): string {
+  if (!teamName) return "";
   const code = getFlagCode(teamName);
   if (!code) return "";
 
@@ -30,7 +32,7 @@ export function teamFlagEmoji(teamName: string): string {
 export function matchFavorite(
   match: Match
 ): { team: string; pct: number } | null {
-  if (!match.prediction) return null;
+  if (!match.prediction || !match.home_team || !match.away_team) return null;
   const { p_home_win, p_away_win } = match.prediction;
   const homeIsFavorite = p_home_win >= p_away_win;
   return {
@@ -74,8 +76,8 @@ function buildEvent(match: Match, origin: string, dtstamp: string): string[] {
   const start = toDate(match.date);
   const end = new Date(start.getTime() + MATCH_DURATION_MS);
 
-  const home = `${teamFlagEmoji(match.home_team)} ${match.home_team}`.trim();
-  const away = `${teamFlagEmoji(match.away_team)} ${match.away_team}`.trim();
+  const home = `${teamFlagEmoji(match.home_team)} ${teamDisplay(match.home_team, match.home_slot)}`.trim();
+  const away = `${teamFlagEmoji(match.away_team)} ${teamDisplay(match.away_team, match.away_slot)}`.trim();
   const groupPrefix = match.group ? `[Grupo ${match.group}] ` : "";
 
   const fav = matchFavorite(match);
@@ -105,7 +107,6 @@ function buildEvent(match: Match, origin: string, dtstamp: string): string[] {
   return lines;
 }
 
-/** Construye el contenido .ics de los partidos de fase de grupos. */
 export function buildGroupStageIcs(matches: Match[], origin: string): string {
   const dtstamp = toICSStamp(new Date());
 
@@ -125,7 +126,6 @@ export function buildGroupStageIcs(matches: Match[], origin: string): string {
   return lines.map(foldLine).join("\r\n");
 }
 
-/** Genera el .ics en el navegador y dispara la descarga. */
 export function downloadCalendar(matches: Match[]): void {
   const ics = buildGroupStageIcs(matches, window.location.origin);
   const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
