@@ -3,6 +3,16 @@ import { Match } from "@/lib/types";
 import { buildIcs } from "@/lib/ics";
 import { CALENDAR_ROUNDS } from "@/lib/calendarRounds";
 
+// Origin público del sitio. Detrás del proxy de Railway, request.nextUrl.origin
+// resuelve a localhost; usamos los headers forwarded (o una env var explícita).
+function publicOrigin(request: NextRequest): string {
+  const env = process.env.NEXT_PUBLIC_SITE_URL;
+  if (env) return env.replace(/\/$/, "");
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  const proto = request.headers.get("x-forwarded-proto") ?? "https";
+  return host ? `${proto}://${host}` : request.nextUrl.origin;
+}
+
 // Registra la descarga en el backend (navegador + geo), sin bloquear al usuario.
 function recordDownload(round: string, request: NextRequest): void {
   const user_agent = request.headers.get("user-agent") ?? "";
@@ -43,7 +53,7 @@ export async function GET(request: NextRequest) {
     return new Response("No se pudo generar el calendario", { status: 502 });
   }
 
-  const ics = buildIcs(matches, request.nextUrl.origin, cfg.calName);
+  const ics = buildIcs(matches, publicOrigin(request), cfg.calName);
 
   recordDownload(round, request);
 
