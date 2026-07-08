@@ -1,7 +1,27 @@
-import { NextRequest } from "next/server";
+import { after, NextRequest } from "next/server";
 import { Match } from "@/lib/types";
 import { buildIcs } from "@/lib/ics";
 import { CALENDAR_ROUNDS } from "@/lib/calendarRounds";
+
+// Registra la descarga en el backend (navegador + geo), sin bloquear al usuario.
+function recordDownload(round: string, request: NextRequest): void {
+  const user_agent = request.headers.get("user-agent") ?? "";
+  const ip = (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim();
+  after(async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/metrics/download`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Metrics-Secret": process.env.SYNC_SECRET ?? "",
+        },
+        body: JSON.stringify({ round, user_agent, ip }),
+      });
+    } catch {
+      // best-effort: una métrica fallida nunca afecta la descarga
+    }
+  });
+}
 
 export async function GET(request: NextRequest) {
   const round = request.nextUrl.searchParams.get("round") ?? "";
@@ -24,6 +44,8 @@ export async function GET(request: NextRequest) {
   }
 
   const ics = buildIcs(matches, request.nextUrl.origin, cfg.calName);
+
+  recordDownload(round, request);
 
   return new Response(ics, {
     headers: {
