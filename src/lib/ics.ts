@@ -126,21 +126,3 @@ export function buildIcs(matches: Match[], origin: string, calName: string): str
 
   return lines.map(foldLine).join("\r\n");
 }
-
-export function downloadCalendar(
-  matches: Match[],
-  opts: { calName: string; fileName: string },
-): void {
-  const ics = buildIcs(matches, window.location.origin, opts.calName);
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = opts.fileName;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  URL.revokeObjectURL(url);
-}
